@@ -1,0 +1,27 @@
+[
+  {
+    "habit_id": 1,
+    "habit_name": "Meditation",
+    "records": []
+  },
+  {
+    "habit_id": 2,
+    "habit_name": "Exercise",
+    "records": []
+  },
+  {
+    "habit_id": 3,
+    "habit_name": "Journaling",
+    "records": []
+  },
+  {
+    "habit_id": 4,
+    "habit_name": "Mindful Breathing",
+    "records": []
+  },
+  {
+    "habit_id": 5,
+    "habit_name": "Stretching",
+    "records": []
+  }
+]
