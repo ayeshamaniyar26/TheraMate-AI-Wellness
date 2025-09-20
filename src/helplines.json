@@ -1,0 +1,52 @@
+{
+  "safety_note": "⚠ Safety First: If you are in immediate danger or having suicidal thoughts, please contact your local emergency services immediately.",
+  "helplines": {
+    "india_wide": [
+      {
+        "name": "AASRA Foundation",
+        "number": "+91 9820466726",
+        "category": ["Suicide Prevention", "24x7 Support"],
+        "language": ["English", "Hindi"],
+        "notes": "Confidential, free support"
+      },
+      {
+        "name": "Vandrevala Foundation",
+        "number": "1860 266 2345",
+        "category": ["Mental Health Support", "Counseling", "24x7 Support"],
+        "language": ["English", "Hindi"],
+        "notes": "Free, confidential"
+      }
+    ],
+    "state_specific": {
+      "Maharashtra": [
+        {
+          "name": "Mumbai Suicide Prevention Helpline",
+          "number": "022 2754 6669",
+          "category": ["Suicide Prevention"],
+          "language": ["Marathi", "Hindi", "English"],
+          "notes": "Local support, free"
+        }
+      ],
+      "Karnataka": [
+        {
+          "name": "NIMHANS Helpline",
+          "number": "080 4611 0007",
+          "category": ["Counseling", "Mental Health Support"],
+          "language": ["Kannada", "English"],
+          "notes": "Expert support, free"
+        }
+      ]
+    },
+    "city_specific": {
+      "Delhi": [
+        {
+          "name": "Delhi Mental Health Helpline",
+          "number": "+91 011 2338 9999",
+          "category": ["Counseling", "24x7 Support"],
+          "language": ["Hindi", "English"],
+          "notes": "Local government initiative, free"
+        }
+      ]
+    }
+  }
+}

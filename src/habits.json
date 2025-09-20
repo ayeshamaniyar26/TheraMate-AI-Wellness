@@ -1,0 +1,52 @@
+[
+  {
+    "habit_id": 1,
+    "habit_name": "Meditation",
+    "records": [
+      {
+        "date": "2025-09-20",
+        "done": true
+      }
+    ]
+  },
+  {
+    "habit_id": 2,
+    "habit_name": "Exercise",
+    "records": [
+      {
+        "date": "2025-09-20",
+        "done": true
+      }
+    ]
+  },
+  {
+    "habit_id": 3,
+    "habit_name": "Journaling",
+    "records": [
+      {
+        "date": "2025-09-20",
+        "done": true
+      }
+    ]
+  },
+  {
+    "habit_id": 4,
+    "habit_name": "Mindful Breathing",
+    "records": [
+      {
+        "date": "2025-09-20",
+        "done": true
+      }
+    ]
+  },
+  {
+    "habit_id": 5,
+    "habit_name": "Stretching",
+    "records": [
+      {
+        "date": "2025-09-20",
+        "done": true
+      }
+    ]
+  }
+]
