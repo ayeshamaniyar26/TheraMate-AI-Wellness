@@ -14,11 +14,11 @@ python -m venv venv
 source venv/bin/activate      # Linux/Mac
 # .\venv\Scripts\activate     # Windows
 
-pip install -r requirements.txt '''
+pip install -r requirements.txt 
 
 
-```markdown
-## 🗂 Project Structure
+
+🗂 Project Structure
 mental_health_app/
 ├── src/
 │   ├── app.py
@@ -28,5 +28,4 @@ mental_health_app/
 ├── requirements.txt
 ├── .gitignore
 ├── .env.example
-└── venv/
-'''
+└── venv/   
