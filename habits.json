@@ -2,26 +2,75 @@
   {
     "habit_id": 1,
     "habit_name": "Meditation",
-    "records": []
+    "records": [
+      {
+        "date": "2025-09-20",
+        "done": true
+      },
+      {
+        "date": "2025-09-21",
+        "done": false
+      }
+    ],
+    "done": true
   },
   {
     "habit_id": 2,
     "habit_name": "Exercise",
-    "records": []
+    "records": [
+      {
+        "date": "2025-09-20",
+        "done": true
+      },
+      {
+        "date": "2025-09-21",
+        "done": true
+      }
+    ],
+    "done": true
   },
   {
     "habit_id": 3,
     "habit_name": "Journaling",
-    "records": []
+    "records": [
+      {
+        "date": "2025-09-20",
+        "done": true
+      },
+      {
+        "date": "2025-09-21",
+        "done": true
+      }
+    ]
   },
   {
     "habit_id": 4,
     "habit_name": "Mindful Breathing",
-    "records": []
+    "records": [
+      {
+        "date": "2025-09-20",
+        "done": true
+      },
+      {
+        "date": "2025-09-21",
+        "done": true
+      }
+    ],
+    "done": true
   },
   {
     "habit_id": 5,
     "habit_name": "Stretching",
-    "records": []
+    "records": [
+      {
+        "date": "2025-09-20",
+        "done": true
+      },
+      {
+        "date": "2025-09-21",
+        "done": true
+      }
+    ],
+    "done": true
   }
 ]
