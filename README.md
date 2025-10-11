@@ -2,7 +2,6 @@
 
 <div align="center">
 
-![TheraMate Banner](https://via.placeholder.com/1200x300/667eea/ffffff?text=TheraMate+%F0%9F%8C%B8+Your+AI+Wellness+Companion)
 
 **A compassionate AI-powered mental wellness companion that helps you track moods, build healthy habits, and find support when you need it most.**
 
@@ -67,7 +66,7 @@
 | 🎯 **Mindfulness Quiz** | 10-question self-assessment | Measures mindfulness levels |
 
 ### 🍎 **Nutrition Tracker**
-- **Enhanced calorie database** with 80+ Indian & international foods
+- **Enhanced calorie database** with Indian & international foods
 - Auto-suggestions as you type (e.g., "vada pav", "biryani", "dosa")
 - Portion size adjustments (Small, Medium, Large)
 - Macronutrient breakdown (Protein, Carbs, Fat)
@@ -92,7 +91,7 @@
 - Personalized sleep recommendations
 
 ### 📞 **Crisis Support Helplines**
-- **100+ Mental health helplines** categorized by region
+- **Mental health helplines** categorized by region
 - International, India-wide, state-specific, and city-specific options
 - 24/7 emergency contacts highlighted
 - Direct links to helpline websites
@@ -230,20 +229,37 @@ The app will open at `http://localhost:8501` 🎉
 
 <div align="center">
 
-### Dashboard
-![Dashboard](https://via.placeholder.com/800x450/667eea/ffffff?text=Dashboard+Screenshot)
+## 🖼️ Screenshots
 
-### AI Chat Interface
-![AI Chat](https://via.placeholder.com/800x450/764ba2/ffffff?text=AI+Chat+Interface)
+<div align="center">
 
-### Mood Tracker Graph
-![Mood Tracker](https://via.placeholder.com/800x450/52B788/ffffff?text=Mood+Tracker+Graph)
+### 🎉 Welcome Screen
+![Welcome to TheraMate](images/welcome.png)
 
-### Wellness Games
-![Wellness Games](https://via.placeholder.com/800x450/F7B801/ffffff?text=Wellness+Games)
+### 🏠 Dashboard
+![Dashboard](images/dashboard.png)
 
-### Nutrition Tracker
-![Nutrition](https://via.placeholder.com/800x450/FF6B35/ffffff?text=Nutrition+Tracker)
+### 💬 AI Chat Interface
+![AI Chat](images/ai_chat.png)
+
+### 📊 Mood Tracker
+![Mood Tracker](images/mood_tracker.png)
+
+### 🎮 Wellness Games
+![Wellness Games Menu](images/wellness_games.png)
+![Wellness Game Demo](images/wellness_games1.png)
+
+### 🍎 Nutrition Tracker
+![Nutrition Tracker](images/nutrition_tracker.png)
+
+### 💧 Water Intake Tracker
+![Water Tracker](images/water_intake_tracker.png)
+
+### 😴 Sleep Tracker
+![Sleep Tracker](images/sleep_tracker.png)
+
+### 📞 Crisis Helplines
+![Helplines](images/helplines.png)
 
 </div>
 
@@ -252,12 +268,25 @@ The app will open at `http://localhost:8501` 🎉
 ## 🧩 Project Structure
 
 ```
+
 MENTAL_HEALTH_APP/
 │
+├── 📁 images/                     # Screenshots & assets
+│   ├── 🖼️ welcome.png            # Welcome screen
+│   ├── 🖼️ dashboard.png          # Dashboard view
+│   ├── 🖼️ ai_chat.png            # AI chat interface
+│   ├── 🖼️ mood_tracker.png       # Mood tracking graph
+│   ├── 🖼️ wellness_games.png     # Games menu
+│   ├── 🖼️ wellness_games1.png    # Game demo
+│   ├── 🖼️ nutrition_tracker.png  # Nutrition logs
+│   ├── 🖼️ water_intake_tracker.png # Water tracking
+│   ├── 🖼️ sleep_tracker.png      # Sleep monitoring
+│   └── 🖼️ helplines.png          # Crisis support
+│
 ├── 📁 audio/                      # Background music for exercises
-│   ├── 🎵 ocean_waves.mp3
-│   ├── 🎵 soft_piano.mp3
-│   └── 🎵 upbeat_ambient.mp3
+│   ├── 🎵 ocean_waves.mp3        # Calm mood music
+│   ├── 🎵 soft_piano.mp3         # Stressed mood music
+│   └── 🎵 upbeat_ambient.mp3     # Energetic mood music
 │
 ├── 📁 src/                        # Source code
 │   ├── 🐍 app.py                 # ⭐ Main Streamlit app
@@ -372,16 +401,6 @@ in the Software without restriction...
 - **Streamlit** for making beautiful web apps simple
 - **WHO** for the WHO-5 Well-Being Index
 - **Mental health advocates** worldwide fighting stigma
-- **You** for caring about mental wellness 💙
-
----
-
-## 📞 Support & Contact
-
-- 🐛 **Report Bugs**: [GitHub Issues](https://github.com/yourusername/theramate/issues)
-- 💡 **Feature Requests**: [GitHub Discussions](https://github.com/yourusername/theramate/discussions)
-- 📧 **Email**: support@theramate.com *(placeholder)*
-- 🌐 **Website**: [theramate.app](https://theramate.app) *(placeholder)*
 
 ---
 
@@ -400,31 +419,6 @@ If you or someone you know is in crisis, please reach out:
 
 ---
 
-Made with 💜 by mental health advocates for mental health advocates
-
-**Star ⭐ this repo if TheraMate helped you!**
-
-[![GitHub stars](https://img.shields.io/github/stars/yourusername/theramate?style=social)](https://github.com/yourusername/theramate/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/yourusername/theramate?style=social)](https://github.com/yourusername/theramate/network/members)
-
-</div>
-
----
-
-## 🔖 Version History
-
-- **v1.0.0** (2025-01-10) - Initial release
-  - WHO-5 wellness tracking
-  - AI chat with Gemini
-  - Mood, nutrition, water, sleep trackers
-  - 7 wellness games
-  - 100+ crisis helplines
-  - Badge achievement system
-
----
-
-<div align="center">
-
-**"The greatest discovery of my generation is that human beings can alter their lives by altering their attitudes."** - *William James*
+Crafted with 💙 for your well-being.
 
 </div>
