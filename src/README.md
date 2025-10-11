@@ -49,16 +49,42 @@ TheraMate includes several **interactive games & exercises**:
 
 ## 🛠️ Project Structure
 
+~~~
+
 mental_health_app/
+|
+|────audio
+│   |──ocean_waves.mp3 
+|   |──soft_piano.mp3 
+|   |──upbeat_ambient.mp3 
+|
+├──────src/ # Source code
+│  ├── app.py # Main Streamlit application
+│  ├── embeddings_store.py # LLM adapter / embeddings (if used)
+│  ├── exercises.json # Breathing & relaxation activities
+│  ├── games.json # Wellness games data
+│  └── .env # API keys & secrets
+│  ├── gratitude.json
+│  ├──habits.json
+│  ├──heplines.json
+│  ├──llm_adapter.py
+│  ├──media_generator.py
+│  ├──mood.json
+│  ├──README.md
+│  ├──safety.py
+│  ├──session_history.json
+│  ├──session_store.py
+│  ├──test_chat.py
+│  ├──trackers.py
+│  ├──ui_components.py
 │
-├── src/ # Source code
-│ ├── app.py # Main Streamlit application
-│ ├── embeddings_store.py # LLM adapter / embeddings (if used)
-│ ├── exercises.json # Breathing & relaxation activities
-│ ├── games.json # Wellness games data
-│ └── .env # API keys & secrets
 │
-├── data/ # (Optional) Saved user/session data
+│
+│
+├
 │
 ├── requirements.txt # Python dependencies
 └── README.md # Project documentation
+~~~
+
+

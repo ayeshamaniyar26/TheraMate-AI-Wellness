@@ -1,97 +1,234 @@
 import json
+import os
 from pathlib import Path
-from google import genai
-import random
 from datetime import datetime, timedelta
+import random
 
-# ---------- Local Storage Paths ----------
+# Import Gemini - FIXED VERSION
+try:
+    import google.generativeai as genai
+    from dotenv import load_dotenv
+    load_dotenv()
+    
+    # Configure Gemini with API key
+    api_key = os.getenv("GEMINI_API_KEY")
+    if api_key:
+        genai.configure(api_key=api_key)
+        print("✅ Gemini API configured successfully")
+    else:
+        print("⚠️ Warning: GEMINI_API_KEY not found in .env file")
+except ImportError:
+    print("⚠️ Warning: google-generativeai not installed")
+    genai = None
+
+# ---------- File Paths ----------
 SESSION_FILE = Path("session_history.json")
 MOOD_FILE = Path("mood.json")
 HELPLINES_FILE = Path("helplines.json")
 HABITS_FILE = Path("habits.json")
 
-# ---------- Gemini Client ----------
-client = genai.Client()  # Reads GEMINI_API_KEY from environment variable
+# ---------- Data Loading ----------
+def load_json(filepath, default=None):
+    """Load JSON file with error handling"""
+    try:
+        if filepath.exists():
+            return json.loads(filepath.read_text(encoding="utf-8"))
+    except Exception as e:
+        print(f"Error loading {filepath}: {e}")
+    return default or []
 
-# ---------- Load Session & Mood ----------
-session_history = json.loads(SESSION_FILE.read_text(encoding="utf-8")) if SESSION_FILE.exists() else []
-mood_history = json.loads(MOOD_FILE.read_text(encoding="utf-8")) if MOOD_FILE.exists() else []
+def save_json(filepath, data):
+    """Save JSON file with error handling"""
+    try:
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+    except Exception as e:
+        print(f"Error saving {filepath}: {e}")
+
+# Load data
+session_history = load_json(SESSION_FILE, [])
+mood_history = load_json(MOOD_FILE, [])
+habits = load_json(HABITS_FILE, [
+    {"habit_id": 1, "habit_name": "Meditation", "records": []},
+    {"habit_id": 2, "habit_name": "Exercise", "records": []},
+    {"habit_id": 3, "habit_name": "Journaling", "records": []},
+    {"habit_id": 4, "habit_name": "Mindful Breathing", "records": []},
+    {"habit_id": 5, "habit_name": "Stretching", "records": []}
+])
 
 # ---------- System Prompt ----------
-SYSTEM_PROMPT = (
-    "You are a supportive and empathetic mental wellness assistant. "
-    "Always respond gently and encouragingly. "
-    "Do not give medical advice; if crisis keywords are detected, respond with resources only."
-)
+SYSTEM_PROMPT = """You are TheraMate, a warm, empathetic, and supportive AI wellness companion. Your role is to:
 
-# ---------- Gemini Chat ----------
-def call_gemini(user_input: str) -> str:
-    messages = [{"role": "system", "content": SYSTEM_PROMPT}]
-    for entry in session_history:
-        messages.append({"role": "user", "content": entry["user"]})
-        messages.append({"role": "assistant", "content": entry["assistant"]})
-    messages.append({"role": "user", "content": user_input})
+1. **Listen actively** - Show genuine interest in the user's feelings and experiences
+2. **Respond with empathy** - Validate emotions without judgment
+3. **Encourage wellness** - Suggest healthy coping strategies and self-care
+4. **Detect crisis** - If you notice severe distress, suicidal thoughts, or self-harm indicators, immediately recommend professional help and crisis helplines
+5. **Stay supportive** - Use warm, gentle language with appropriate emojis 🌸💙
+6. **Be concise** - Keep responses thoughtful but not overwhelming (2-4 sentences typically)
 
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=messages[-1]["content"]
-    )
-    assistant_reply = response.text.strip()
+Important guidelines:
+- You are NOT a medical professional and cannot diagnose or treat conditions
+- For serious concerns, always recommend professional help
+- Focus on emotional support, validation, and wellness tips
+- Use a friendly, conversational tone
+- Ask follow-up questions to show care
+- Celebrate small wins and progress
 
-    session_history.append({"user": user_input, "assistant": assistant_reply})
-    save_session()
-    return assistant_reply
+Crisis keywords to watch for: suicide, kill myself, self-harm, end it all, no point living, etc.
+If detected, respond with care and immediately suggest helplines."""
 
-def save_session():
-    with open(SESSION_FILE, "w", encoding="utf-8") as f:
-        json.dump(session_history, f, indent=2, ensure_ascii=False)
-
-def save_mood():
-    with open(MOOD_FILE, "w", encoding="utf-8") as f:
-        json.dump(mood_history, f, indent=2, ensure_ascii=False)
-
-# ---------- WHO-5 ----------
+# ---------- WHO-5 Questions ----------
 WHO5_QUESTIONS = [
-    
-    "I have felt calm and relaxed.",
-    "I woke up feeling fresh and rested.",
-    "My daily life has been filled with things that interest me.",
-    "I felt connected to others today.", 
-    "I was able to focus on tasks without distraction."  
+    "I have felt cheerful and in good spirits",
+    "I have felt calm and relaxed",
+    "I have felt active and vigorous",
+    "I woke up feeling fresh and rested",
+    "My daily life has been filled with things that interest me"
 ]
 
-# ---------- Adaptive Exercise Suggestions ----------
+# ---------- Gemini Chat Function - COMPLETELY FIXED ----------
+def call_gemini(user_input: str, context: dict = None) -> str:
+    """
+    Call Gemini AI for response
+    
+    Args:
+        user_input: User's message
+        context: Optional context (mood score, streak, etc.)
+    
+    Returns:
+        AI response string
+    """
+    
+    if not genai:
+        return "⚠️ AI service unavailable. Please install google-generativeai: pip install google-generativeai"
+    
+    if not os.getenv("GEMINI_API_KEY"):
+        return "⚠️ Please add your GEMINI_API_KEY to the .env file. Get it from: https://aistudio.google.com/app/apikey"
+    
+    try:
+        # Build context string
+        context_str = ""
+        if context:
+            if context.get('mood_score'):
+                context_str += f"\n[User's recent mood score: {context['mood_score']}/100]"
+            if context.get('streak'):
+                context_str += f"\n[User's wellness streak: {context['streak']} days]"
+        
+        # Build conversation history
+        history_str = ""
+        recent_history = session_history[-5:] if len(session_history) > 5 else session_history
+        for entry in recent_history:
+            if isinstance(entry, dict):
+                history_str += f"User: {entry.get('user', '')}\n"
+                history_str += f"Assistant: {entry.get('assistant', '')}\n"
+        
+        # Combine into full prompt
+        full_prompt = f"{SYSTEM_PROMPT}\n{context_str}\n\nRecent conversation:\n{history_str}\nUser: {user_input}\n\nAssistant:"
+        
+        # Call Gemini - FIXED API CALL
+        model = genai.GenerativeModel('gemini-2.0-flash-exp')
+        response = model.generate_content(full_prompt)
+        
+        assistant_reply = response.text.strip()
+        
+        # Check for crisis keywords
+        crisis_keywords = ['suicide', 'kill myself', 'self-harm', 'end it all', 'no point living', 'want to die']
+        if any(keyword in user_input.lower() for keyword in crisis_keywords):
+            assistant_reply += "\n\n🚨 I'm concerned about what you're sharing. Please reach out to a crisis helpline immediately - they're available 24/7 and can provide real support. You can find helplines in the 📞 Helplines section."
+        
+        # Save to history
+        session_history.append({
+            "user": user_input,
+            "assistant": assistant_reply,
+            "timestamp": datetime.now().isoformat()
+        })
+        save_session()
+        
+        return assistant_reply
+        
+    except Exception as e:
+        print(f"Error calling Gemini: {e}")
+        return f"I'm having trouble connecting right now. Please try again in a moment. 💙"
+
+def save_session():
+    """Save session history"""
+    save_json(SESSION_FILE, session_history)
+
+def save_mood():
+    """Save mood history"""
+    save_json(MOOD_FILE, mood_history)
+
+# ---------- Calculate Streak - FIXED NAME ----------
+def calculate_streak():
+    """Calculate current wellness streak"""
+    if not mood_history:
+        return 0
+    
+    # Sort mood history by date (most recent first)
+    sorted_moods = sorted(
+        [m for m in mood_history if "date" in m],
+        key=lambda x: datetime.strptime(x["date"], "%Y-%m-%d"),
+        reverse=True
+    )
+    
+    if not sorted_moods:
+        return 0
+    
+    streak = 1
+    today = datetime.today().date()
+    last_date = datetime.strptime(sorted_moods[0]["date"], "%Y-%m-%d").date()
+    
+    # Check if the most recent entry is today or yesterday
+    days_diff = (today - last_date).days
+    if days_diff > 1:
+        return 0  # Streak broken
+    
+    # Count consecutive days backwards
+    for i in range(1, len(sorted_moods)):
+        current_date = datetime.strptime(sorted_moods[i]["date"], "%Y-%m-%d").date()
+        prev_date = datetime.strptime(sorted_moods[i-1]["date"], "%Y-%m-%d").date()
+        
+        # Check if dates are consecutive
+        if (prev_date - current_date).days == 1:
+            streak += 1
+        else:
+            break
+    
+    return streak
+
+# ---------- Exercise Suggestions ----------
 EXERCISE_CATEGORIES = {
     "relaxation": [
-        "NHS Breathing: inhale 4s, hold 7s, exhale 8s x5",
-        "5-4-3-2-1 Grounding",
-        "Listen to calming music for 5 minutes",
-        "Progressive muscle relaxation",
-        "Light stretching",
-        "Warm tea break for 5 mins",
-        "Guided meditation"
+        "🌬️ 4-7-8 Breathing: Inhale 4s, hold 7s, exhale 8s (repeat 5 times)",
+        "🧘 5-4-3-2-1 Grounding: Name 5 things you see, 4 you feel, 3 you hear, 2 you smell, 1 you taste",
+        "🎵 Listen to calming music for 5 minutes",
+        "💆 Progressive muscle relaxation: Tense and release each muscle group",
+        "🌿 Light stretching for 5 minutes",
+        "☕ Take a mindful tea/water break",
+        "🎧 Guided meditation for 10 minutes"
     ],
     "mindfulness": [
-        "Journaling: write down 3 things you are grateful for",
-        "Mindful walk for 10 minutes",
-        "Meditation: 10 minutes guided",
-        "Observe a natural object mindfully",
-        "Mindful eating: eat slowly",
-        "Body scan meditation",
-        "Listen to ambient sounds"
+        "📝 Journal 3 things you're grateful for today",
+        "🚶 Mindful walk: Focus on each step and breath",
+        "🧘 10-minute guided meditation",
+        "🍃 Observe nature: Study a flower or tree mindfully",
+        "🍽️ Mindful eating: Eat one thing very slowly, savoring each bite",
+        "🛀 Body scan meditation: Notice sensations from head to toe",
+        "🎶 Listen to ambient sounds with full attention"
     ],
     "energy": [
-        "Pomodoro Focus: 25 min work + 5 min break",
-        "Quick stretches: jumping jacks & squats",
-        "2-min energizing walk",
-        "5-min brisk walk/stairs",
-        "Push-ups & sit-ups",
-        "Dance to upbeat music",
-        "Open window, deep breaths & stretch"
+        "⏰ Pomodoro: 25 min focused work + 5 min break",
+        "🏃 Quick cardio: 20 jumping jacks + 10 squats",
+        "🚶 2-minute energizing walk outside",
+        "🏃 5-minute brisk walk or climb stairs",
+        "💪 10 push-ups and 15 sit-ups",
+        "💃 Dance to an upbeat song",
+        "🪟 Open a window, take 10 deep breaths, stretch arms"
     ]
 }
 
 def suggest_exercise(who5_score=None):
+    """Suggest exercise based on WHO-5 score"""
     if who5_score is None:
         category = random.choice(list(EXERCISE_CATEGORIES.keys()))
     elif who5_score < 50:
@@ -100,66 +237,44 @@ def suggest_exercise(who5_score=None):
         category = "mindfulness"
     else:
         category = "energy"
+    
     exercise = random.choice(EXERCISE_CATEGORIES[category])
-    return f"💡 Suggested ({category.title()}) exercise: {exercise}"
+    return f"💡 {category.title()} exercise: {exercise}"
 
 # ---------- Helplines ----------
-helplines = json.loads(HELPLINES_FILE.read_text(encoding="utf-8")) if HELPLINES_FILE.exists() else []
-
 def get_helplines():
-    if not helplines:
-        return "No helplines available."
-    return "\n".join([f"{h['name']}: {h['number']}" for h in helplines])
+    """Get helpline information"""
+    helplines_data = load_json(HELPLINES_FILE, {})
+    if not helplines_data:
+        return "Helplines data not available. Please check helplines.json file."
+    
+    output = "🆘 Mental Health Helplines:\n\n"
+    output += helplines_data.get("safety_note", "") + "\n\n"
+    
+    india_wide = helplines_data.get("helplines", {}).get("india_wide", [])
+    for h in india_wide[:3]:  # Show first 3
+        if isinstance(h, dict):
+            output += f"📞 {h.get('name', 'N/A')}: {h.get('number', 'N/A')}\n"
+    
+    return output
 
 # ---------- Habit Tracker ----------
-# ---------- Habit Tracker ----------
-if HABITS_FILE.exists():
-    with open(HABITS_FILE, "r", encoding="utf-8") as f:
-        habits = json.load(f)
-else:
-    habits = [
-        {"habit_id": 1, "habit_name": "Meditation"},
-        {"habit_id": 2, "habit_name": "Exercise"},
-        {"habit_id": 3, "habit_name": "Journaling"},
-        {"habit_id": 4, "habit_name": "Mindful Breathing"},
-        {"habit_id": 5, "habit_name": "Stretching"}
-    ]
-    for h in habits:
-        h["records"] = []
-    with open(HABITS_FILE, "w", encoding="utf-8") as f:
-        json.dump(habits, f, indent=2)
-
-# ✅ Ensure unique habits (no duplicates by name)
-seen = set()
-unique_habits = []
-for h in habits:
-    if h["habit_name"] not in seen:
-        seen.add(h["habit_name"])
-        if "records" not in h:
-            h["records"] = []
-        unique_habits.append(h)
-habits = unique_habits
-with open(HABITS_FILE, "w", encoding="utf-8") as f:
-    json.dump(habits, f, indent=2)
-
-
 def get_today_date():
+    """Get today's date string"""
     return datetime.today().strftime("%Y-%m-%d")
 
-
 def get_today_habits():
-    """Return today's habits, ensuring only one record per habit per day."""
+    """Get today's habit checklist"""
     global habits
     today = get_today_date()
     today_habits = []
-
+    
     for h in habits:
-        # Ensure records key exists
         if "records" not in h:
             h["records"] = []
-
-        # Find today's record
-        record = next((r for r in h["records"] if r["date"] == today), None)
+        
+        record = next((r for r in h["records"] if r.get("date") == today), None)
+        
         if record:
             today_habits.append({
                 "habit_id": h["habit_id"],
@@ -174,19 +289,15 @@ def get_today_habits():
                 "habit_name": h["habit_name"],
                 "done": False
             })
-
-    # Save back to file
-    with open(HABITS_FILE, "w", encoding="utf-8") as f:
-        json.dump(habits, f, indent=2)
-
+    
+    save_json(HABITS_FILE, habits)
     return today_habits
 
-
 def mark_habit_done(habit_id: int):
-    """Mark the given habit as done for today."""
+    """Mark habit as complete"""
     global habits
     today = get_today_date()
-
+    
     for h in habits:
         if h["habit_id"] == habit_id:
             for r in h.get("records", []):
@@ -194,41 +305,60 @@ def mark_habit_done(habit_id: int):
                     r["done"] = True
                     break
             else:
-                # If no record for today, create one
                 h["records"].append({"date": today, "done": True})
             break
-
-    # Save back to file
-    with open(HABITS_FILE, "w", encoding="utf-8") as f:
-        json.dump(habits, f, indent=2)
-
+    
+    save_json(HABITS_FILE, habits)
 
 # ---------- Weekly Happiness ----------
-def get_weekly_happiness(past_days=7):
+def get_weekly_happiness(days_back=7):
+    """Get mood data for the past N days"""
     today = datetime.today()
-    week_ago = today - timedelta(days=past_days)
-    weekly_scores = []
-    weekly_days = []
-
-    for m in mood_history:
-        date_str = m.get("date", "")
-        if not date_str:
-            continue
-        try:
-            entry_date = datetime.strptime(date_str, "%Y-%m-%d")
-            if entry_date >= week_ago:
-                weekly_scores.append(m.get("score", 0))
-                weekly_days.append(entry_date.strftime("%a"))
-        except ValueError:
-            continue
-
-    # Generate continuous list of days
-    days = [(week_ago + timedelta(days=i)).strftime("%a") for i in range(past_days)]
+    days = []
     scores = []
-    for d in days:
-        if d in weekly_days:
-            idx = weekly_days.index(d)
-            scores.append(weekly_scores[idx])
-        else:
-            scores.append(0)
+    
+    for i in range(days_back):
+        date = today - timedelta(days=days_back - 1 - i)
+        date_str = date.strftime("%Y-%m-%d")
+        day_label = date.strftime("%a")
+        
+        # Find mood entry for this date
+        entry = next((m for m in mood_history if m.get("date") == date_str), None)
+        
+        days.append(day_label)
+        scores.append(entry.get("score", 0) if entry else 0)
+    
     return days, scores
+
+# ---------- Wellness Insights ----------
+def get_wellness_insights():
+    """Generate insights based on recent data"""
+    if not mood_history:
+        return "Start logging your mood to see insights! 📊"
+    
+    recent_moods = [m.get("score", 50) for m in mood_history[-7:]]
+    avg_mood = sum(recent_moods) / len(recent_moods)
+    
+    insights = []
+    
+    if avg_mood >= 80:
+        insights.append("🌟 You're doing amazing! Your mood has been consistently positive.")
+    elif avg_mood >= 60:
+        insights.append("😊 You're maintaining good emotional balance. Keep it up!")
+    elif avg_mood >= 40:
+        insights.append("🌤️ Some ups and downs this week. That's normal - be gentle with yourself.")
+    else:
+        insights.append("💙 It's been challenging lately. Remember to reach out for support when needed.")
+    
+    # Habit insights
+    today_habits = get_today_habits()
+    completed = sum(1 for h in today_habits if h.get("done"))
+    if completed >= 3:
+        insights.append(f"✅ Great job completing {completed} habits today!")
+    
+    # Streak insight
+    streak = calculate_streak()
+    if streak >= 7:
+        insights.append(f"🔥 Amazing {streak}-day streak! You're building great wellness habits!")
+    
+    return "\n".join(insights)

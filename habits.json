@@ -10,6 +10,26 @@
       {
         "date": "2025-09-21",
         "done": false
+      },
+      {
+        "date": "2025-10-03",
+        "done": true
+      },
+      {
+        "date": "2025-10-08",
+        "done": false
+      },
+      {
+        "date": "2025-10-09",
+        "done": false
+      },
+      {
+        "date": "2025-10-10",
+        "done": false
+      },
+      {
+        "date": "2025-10-11",
+        "done": false
       }
     ],
     "done": true
@@ -25,6 +45,26 @@
       {
         "date": "2025-09-21",
         "done": true
+      },
+      {
+        "date": "2025-10-03",
+        "done": true
+      },
+      {
+        "date": "2025-10-08",
+        "done": false
+      },
+      {
+        "date": "2025-10-09",
+        "done": false
+      },
+      {
+        "date": "2025-10-10",
+        "done": false
+      },
+      {
+        "date": "2025-10-11",
+        "done": false
       }
     ],
     "done": true
@@ -40,8 +80,29 @@
       {
         "date": "2025-09-21",
         "done": true
+      },
+      {
+        "date": "2025-10-03",
+        "done": false
+      },
+      {
+        "date": "2025-10-08",
+        "done": false
+      },
+      {
+        "date": "2025-10-09",
+        "done": false
+      },
+      {
+        "date": "2025-10-10",
+        "done": false
+      },
+      {
+        "date": "2025-10-11",
+        "done": false
       }
-    ]
+    ],
+    "done": true
   },
   {
     "habit_id": 4,
@@ -54,6 +115,26 @@
       {
         "date": "2025-09-21",
         "done": true
+      },
+      {
+        "date": "2025-10-03",
+        "done": true
+      },
+      {
+        "date": "2025-10-08",
+        "done": false
+      },
+      {
+        "date": "2025-10-09",
+        "done": false
+      },
+      {
+        "date": "2025-10-10",
+        "done": false
+      },
+      {
+        "date": "2025-10-11",
+        "done": false
       }
     ],
     "done": true
@@ -69,6 +150,26 @@
       {
         "date": "2025-09-21",
         "done": true
+      },
+      {
+        "date": "2025-10-03",
+        "done": true
+      },
+      {
+        "date": "2025-10-08",
+        "done": false
+      },
+      {
+        "date": "2025-10-09",
+        "done": false
+      },
+      {
+        "date": "2025-10-10",
+        "done": false
+      },
+      {
+        "date": "2025-10-11",
+        "done": false
       }
     ],
     "done": true

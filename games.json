@@ -541,5 +541,1108 @@
     "game": "Mood Color Match",
     "color": "Purple",
     "date": "2025-09-21"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🍫 Unlimited chocolate",
+      "🍕 Unlimited pizza"
+    ],
+    "choice": "🍕 Unlimited pizza",
+    "date": "2025-10-02"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🐶 Talk to animals",
+      "🕊 Fly like a bird"
+    ],
+    "choice": "🕊 Fly like a bird",
+    "date": "2025-10-02"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Green",
+    "date": "2025-10-02"
+  },
+  {
+    "game": "Would You Rather",
+    "choice": "🍫 Unlimited chocolate",
+    "date": "2025-10-03"
+  },
+  {
+    "game": "Would You Rather",
+    "choice": "🎶 Always hear music",
+    "date": "2025-10-03"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "📚 Read minds",
+      "🔮 See the future"
+    ],
+    "choice": "📚 Read minds",
+    "date": "2025-10-03"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🍫 Unlimited chocolate",
+      "🍕 Unlimited pizza"
+    ],
+    "choice": "🍫 Unlimited chocolate",
+    "date": "2025-10-03"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "📚 Read minds",
+      "🔮 See the future"
+    ],
+    "choice": "🔮 See the future",
+    "date": "2025-10-03"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🍫 Unlimited chocolate",
+      "🍕 Unlimited pizza"
+    ],
+    "choice": "🍕 Unlimited pizza",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🐶 Talk to animals",
+      "🕊 Fly like a bird"
+    ],
+    "choice": "🕊 Fly like a bird",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🐶 Talk to animals",
+      "🕊 Fly like a bird"
+    ],
+    "choice": "🕊 Fly like a bird",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🐶 Talk to animals",
+      "🕊 Fly like a bird"
+    ],
+    "choice": "🕊 Fly like a bird",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "📚 Read minds",
+      "🔮 See the future"
+    ],
+    "choice": "📚 Read minds",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🐶 Talk to animals",
+      "🕊 Fly like a bird"
+    ],
+    "choice": "🐶 Talk to animals",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🐶 Talk to animals",
+      "🕊 Fly like a bird"
+    ],
+    "choice": "🕊 Fly like a bird",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "📚 Read minds",
+      "🔮 See the future"
+    ],
+    "choice": "🔮 See the future",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🌍 Travel to space 🚀",
+      "🌊 Explore the deep sea"
+    ],
+    "choice": "🌊 Explore the deep sea",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🎶 Always hear music",
+      "🎨 Always see art"
+    ],
+    "choice": "🎶 Always hear music",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "💤 Sleep 12 hrs/day",
+      "⚡ Never need sleep"
+    ],
+    "choice": "⚡ Never need sleep",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Purple",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "prompt": "☀️ Recall your happiest moment this week.",
+    "response": "participating in hackathons and also building your own rag based ai tutor app in 3 days",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "prompt": "☀️ Recall your happiest moment this week.",
+    "response": "participating in hackathons and also building your own rag based ai tutor app in 3 days",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Red",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🍫 Unlimited chocolate",
+      "🍕 Unlimited pizza"
+    ],
+    "choice": "🍕 Unlimited pizza",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🎶 Always hear music",
+      "🎨 Always see art"
+    ],
+    "choice": "🎨 Always see art",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🍫 Unlimited chocolate",
+      "🍕 Unlimited pizza"
+    ],
+    "choice": "🍫 Unlimited chocolate",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "💤 Sleep 12 hrs/day",
+      "⚡ Never need sleep"
+    ],
+    "choice": "💤 Sleep 12 hrs/day",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🎶 Always hear music",
+      "🎨 Always see art"
+    ],
+    "choice": "🎶 Always hear music",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Red",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Red",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "prompt": "😊 Think of a person who made you smile recently.",
+    "response": "my mom\n",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🔄 Undo past mistakes",
+      "👁️ See your future"
+    ],
+    "choice": "👁️ See your future",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🌟 Be famous",
+      "💰 Be wealthy"
+    ],
+    "choice": "💰 Be wealthy",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "📚 Read minds",
+      "🔮 See the future"
+    ],
+    "choice": "🔮 See the future",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "📱 No internet for a year",
+      "🚗 No car for a year"
+    ],
+    "choice": "📱 No internet for a year",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "💤 Sleep 12 hrs/day",
+      "⚡ Never need sleep"
+    ],
+    "choice": "⚡ Never need sleep",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🌟 Be famous",
+      "💰 Be wealthy"
+    ],
+    "choice": "🌟 Be famous",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🐶 Talk to animals",
+      "🕊️ Fly like a bird"
+    ],
+    "choice": "🐶 Talk to animals",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Pink",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Green",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Turquoise",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Blue",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Orange",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Red",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Purple",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "prompt": "😊 Think of a person who made you smile recently.",
+    "response": "my mom\n",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "prompt": "😊 Think of a person who made you smile recently.",
+    "response": "my mom\nmy mom",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "prompt": "✨ What's one thing you're looking forward to?",
+    "response": "sleep",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "📚 Read minds",
+      "🔮 See the future"
+    ],
+    "choice": "🔮 See the future",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🌟 Be famous",
+      "💰 Be wealthy"
+    ],
+    "choice": "🌟 Be famous",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "📚 Read minds",
+      "🔮 See the future"
+    ],
+    "choice": "🔮 See the future",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "📚 Read minds",
+      "🔮 See the future"
+    ],
+    "choice": "🔮 See the future",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🍫 Unlimited chocolate",
+      "🍕 Unlimited pizza"
+    ],
+    "choice": "🍕 Unlimited pizza",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "💤 Sleep 12 hrs/day",
+      "⚡ Never need sleep"
+    ],
+    "choice": "💤 Sleep 12 hrs/day",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🌟 Be famous",
+      "💰 Be wealthy"
+    ],
+    "choice": "💰 Be wealthy",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Turquoise",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Green",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Red",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Purple",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Orange",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Blue",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Pink",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Turquoise",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Green",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "prompt": "😊 Think of a person who made you smile recently.",
+    "response": "my love\n",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "prompt": "🌟 Name one thing you're grateful for today.",
+    "response": "nothing",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🎶 Always hear music",
+      "🎨 Always see art"
+    ],
+    "choice": "🎨 Always see art",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🐶 Talk to animals",
+      "🕊️ Fly like a bird"
+    ],
+    "choice": "🐶 Talk to animals",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🎭 Be invisible",
+      "⏰ Freeze time"
+    ],
+    "choice": "⏰ Freeze time",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🎭 Be invisible",
+      "⏰ Freeze time"
+    ],
+    "choice": "⏰ Freeze time",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🍫 Unlimited chocolate",
+      "🍕 Unlimited pizza"
+    ],
+    "choice": "🍫 Unlimited chocolate",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🍫 Unlimited chocolate",
+      "🍕 Unlimited pizza"
+    ],
+    "choice": "🍫 Unlimited chocolate",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Red",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Purple",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Pink",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "prompt": "🌈 What brought you joy today?",
+    "response": "wanted to test the app\n",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "prompt": "🌈 What brought you joy today?",
+    "response": "wanted to test the app\n",
+    "date": "2025-10-08"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "prompt": "🌟 Name one thing you're grateful for today.",
+    "response": "making app\n",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🍫 Unlimited chocolate",
+      "🍕 Unlimited pizza"
+    ],
+    "choice": "🍫 Unlimited chocolate",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🎶 Always hear music",
+      "🎨 Always see art"
+    ],
+    "choice": "🎶 Always hear music",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🎶 Always hear music",
+      "🎨 Always see art"
+    ],
+    "choice": "🎶 Always hear music",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "💤 Sleep 12 hrs/day",
+      "⚡ Never need sleep"
+    ],
+    "choice": "💤 Sleep 12 hrs/day",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🌟 Be famous",
+      "💰 Be wealthy"
+    ],
+    "choice": "🌟 Be famous",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🎸 Master any instrument",
+      "🗣️ Speak all languages"
+    ],
+    "choice": "🗣️ Speak all languages",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Pink",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🏖️ Beach vacation forever",
+      "🏔️ Mountain retreat forever"
+    ],
+    "choice": "🏖️ Beach vacation forever",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "💤 Sleep 12 hrs/day",
+      "⚡ Never need sleep"
+    ],
+    "choice": "⚡ Never need sleep",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Purple",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🍫 Unlimited chocolate",
+      "🍕 Unlimited pizza"
+    ],
+    "choice": "🍕 Unlimited pizza",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🎭 Be invisible",
+      "⏰ Freeze time"
+    ],
+    "choice": "⏰ Freeze time",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🌍 Travel to space 🚀",
+      "🌊 Explore the deep sea"
+    ],
+    "choice": "🌊 Explore the deep sea",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🐶 Talk to animals",
+      "🕊️ Fly like a bird"
+    ],
+    "choice": "🕊️ Fly like a bird",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Blue",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🍫 Unlimited chocolate",
+      "🍕 Unlimited pizza"
+    ],
+    "choice": "🍕 Unlimited pizza",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🌟 Be famous",
+      "💰 Be wealthy"
+    ],
+    "choice": "💰 Be wealthy",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🐶 Talk to animals",
+      "🕊️ Fly like a bird"
+    ],
+    "choice": "🐶 Talk to animals",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Orange",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🌍 Travel to space 🚀",
+      "🌊 Explore the deep sea"
+    ],
+    "choice": "🌊 Explore the deep sea",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "💤 Sleep 12 hrs/day",
+      "⚡ Never need sleep"
+    ],
+    "choice": "💤 Sleep 12 hrs/day",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "📱 No internet for a year",
+      "🚗 No car for a year"
+    ],
+    "choice": "🚗 No car for a year",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🐶 Talk to animals",
+      "🕊️ Fly like a bird"
+    ],
+    "choice": "🕊️ Fly like a bird",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Purple",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "📱 No internet for a year",
+      "🚗 No car for a year"
+    ],
+    "choice": "📱 No internet for a year",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🐶 Talk to animals",
+      "🕊️ Fly like a bird"
+    ],
+    "choice": "🕊️ Fly like a bird",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "📚 Read minds",
+      "🔮 See the future"
+    ],
+    "choice": "📚 Read minds",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "📚 Read minds",
+      "🔮 See the future"
+    ],
+    "choice": "📚 Read minds",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🏖️ Beach vacation forever",
+      "🏔️ Mountain retreat forever"
+    ],
+    "choice": "🏖️ Beach vacation forever",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🌟 Be famous",
+      "💰 Be wealthy"
+    ],
+    "choice": "💰 Be wealthy",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🎸 Master any instrument",
+      "🗣️ Speak all languages"
+    ],
+    "choice": "🗣️ Speak all languages",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Yellow",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Orange",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Turquoise",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Green",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Turquoise",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Green",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Pink",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Yellow",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Red",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Purple",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🏖️ Beach vacation forever",
+      "🏔️ Mountain retreat forever"
+    ],
+    "choice": "🏔️ Mountain retreat forever",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🎸 Master any instrument",
+      "🗣️ Speak all languages"
+    ],
+    "choice": "🗣️ Speak all languages",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "📱 No internet for a year",
+      "🚗 No car for a year"
+    ],
+    "choice": "📱 No internet for a year",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🌍 Travel to space 🚀",
+      "🌊 Explore the deep sea"
+    ],
+    "choice": "🌍 Travel to space 🚀",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Orange",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "question": "👥 What act of kindness have you experienced?",
+    "response": "helping my friends",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "question": "🍽️ What meal or food brought you happiness?",
+    "response": "chicken don",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "question": "📚 What knowledge or lesson are you grateful to have learned?",
+    "response": "as of now nothing",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "question": "🎁 What positive thing happened recently?",
+    "response": "mom came back and app is working amazingly well",
+    "date": "2025-10-09"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🌍 Travel to space 🚀",
+      "🌊 Explore the deep sea"
+    ],
+    "choice": "🌊 Explore the deep sea",
+    "date": "2025-10-10"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🎭 Be invisible",
+      "⏰ Freeze time"
+    ],
+    "choice": "⏰ Freeze time",
+    "date": "2025-10-10"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🐶 Talk to animals",
+      "🕊️ Fly like a bird"
+    ],
+    "choice": "🕊️ Fly like a bird",
+    "date": "2025-10-10"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Red",
+    "date": "2025-10-10"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "question": "😊 What memory makes you feel warm inside?",
+    "response": "my moms love",
+    "date": "2025-10-10"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "question": "🌟 Who in your life are you most thankful for?",
+    "response": "my parents, my GOD",
+    "date": "2025-10-10"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🎶 Always hear music",
+      "🎨 Always see art"
+    ],
+    "choice": "🎨 Always see art",
+    "date": "2025-10-10"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "📱 No internet for a year",
+      "🚗 No car for a year"
+    ],
+    "choice": "🚗 No car for a year",
+    "date": "2025-10-10"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Red",
+    "date": "2025-10-10"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "question": "📚 What knowledge or lesson are you grateful to have learned?",
+    "response": "respect elders",
+    "date": "2025-10-10"
+  },
+  {
+    "game": "Breathing Exercise",
+    "mood": "Calm",
+    "cycles": 3,
+    "date": "2025-10-10",
+    "time": "02:06:16"
+  },
+  {
+    "game": "Breathing Exercise",
+    "mood": "Stressed",
+    "cycles": 3,
+    "date": "2025-10-10",
+    "time": "02:07:58"
+  },
+  {
+    "game": "Breathing Exercise",
+    "mood": "Calm",
+    "date": "2025-10-10",
+    "time": "02:13:36"
+  },
+  {
+    "game": "Breathing Exercise",
+    "mood": "Stressed",
+    "date": "2025-10-10",
+    "time": "02:14:50"
+  },
+  {
+    "game": "Breathing Exercise",
+    "mood": "Energetic",
+    "date": "2025-10-10",
+    "time": "02:16:30"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🎭 Be invisible",
+      "⏰ Freeze time"
+    ],
+    "choice": "⏰ Freeze time",
+    "date": "2025-10-10"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🌟 Be famous",
+      "💰 Be wealthy"
+    ],
+    "choice": "🌟 Be famous",
+    "date": "2025-10-10"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🎸 Master any instrument",
+      "🗣️ Speak all languages"
+    ],
+    "choice": "🗣️ Speak all languages",
+    "date": "2025-10-10"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Purple",
+    "date": "2025-10-10"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Blue",
+    "date": "2025-10-10"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Pink",
+    "date": "2025-10-10"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Yellow",
+    "date": "2025-10-10"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "question": "💖 What about yourself are you grateful for?",
+    "response": "SUCCESSFULLY BUILDING THE APP",
+    "date": "2025-10-10"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "question": "🌟 Who in your life are you most thankful for?",
+    "response": "MY PARENTS",
+    "date": "2025-10-10"
   }
 ]

@@ -8,5 +8,25 @@
     "date": "2025-09-21",
     "game": "Would You Rather",
     "choice": "Option 1"
+  },
+  {
+    "date": "2025-10-02",
+    "game": "Mood Color Match",
+    "mood_score": 75
+  },
+  {
+    "date": "2025-10-02",
+    "game": "Would You Rather",
+    "choice": "Option 1"
+  },
+  {
+    "date": "2025-10-03",
+    "game": "Mood Color Match",
+    "mood_score": 75
+  },
+  {
+    "date": "2025-10-03",
+    "game": "Would You Rather",
+    "choice": "Option 1"
   }
 ]
