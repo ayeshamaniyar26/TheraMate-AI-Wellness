@@ -7,7 +7,6 @@
 
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-FF4B4B.svg)](https://streamlit.io/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Gemini AI](https://img.shields.io/badge/Powered%20by-Gemini%20AI-4285F4.svg)](https://ai.google.dev/)
 [![Status](https://img.shields.io/badge/Status-Active-success.svg)]()
 
