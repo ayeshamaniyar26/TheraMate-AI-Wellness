@@ -338,27 +338,6 @@ TheraMate uses the **WHO-5 Well-Being Index**, a scientifically validated questi
 
 ---
 
-## 🤝 Contributing
-
-We welcome contributions! Here's how:
-
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/AmazingFeature`)
-3. **Commit** your changes (`git commit -m 'Add AmazingFeature'`)
-4. **Push** to the branch (`git push origin feature/AmazingFeature`)
-5. **Open** a Pull Request
-
-### Areas for Contribution
-
-- 🌐 Multi-language support
-- 📱 Mobile responsiveness improvements
-- 🎨 New wellness games
-- 🗺️ More helplines (international)
-- 🧪 Unit tests
-- 📚 Documentation
-
----
-
 ## 📜 License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
@@ -381,10 +360,6 @@ in the Software without restriction...
 - [ ] Mood prediction using ML
 - [ ] Community support forums
 - [ ] Therapist matching
-- [ ] Mobile app (React Native)
-- [ ] Data export/import
-- [ ] Multiple user profiles
-- [ ] Integration with wearables
 
 ---
 
