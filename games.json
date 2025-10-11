@@ -1644,5 +1644,41 @@
     "question": "🌟 Who in your life are you most thankful for?",
     "response": "MY PARENTS",
     "date": "2025-10-10"
+  },
+  {
+    "game": "Breathing Exercise",
+    "mood": "Calm",
+    "date": "2025-10-11",
+    "time": "08:09:32"
+  },
+  {
+    "game": "Would You Rather",
+    "question": [
+      "🎶 Always hear music",
+      "🎨 Always see art"
+    ],
+    "choice": "🎨 Always see art",
+    "date": "2025-10-11"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Pink",
+    "date": "2025-10-11"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Blue",
+    "date": "2025-10-11"
+  },
+  {
+    "game": "Mood Color Match",
+    "color": "Green",
+    "date": "2025-10-11"
+  },
+  {
+    "game": "Gratitude Spinner",
+    "question": "🏡 What aspect of your home brings you comfort?",
+    "response": "my room",
+    "date": "2025-10-11"
   }
 ]

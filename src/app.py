@@ -511,8 +511,7 @@ if page != "💬 AI Chat":
                     st.rerun()
 
 
-
-# ========== DASHBOARD PAGE - FIXED WHO-5 INSIGHTS ========== 
+# ========== DASHBOARD PAGE - FIXED FOR DARK MODE ========== 
 if page == "🏠 Dashboard":
     st.markdown("<h1 style='color: #667eea;'>🌸 TheraMate Dashboard</h1>", unsafe_allow_html=True)
     
@@ -529,9 +528,9 @@ if page == "🏠 Dashboard":
     
     with col1:
         st.markdown(f"""
-        <div class="wellness-card">
-            <h3>🎯 Today's Goals</h3>
-            <p>✓ WHO-5 Wellness Check<br>
+        <div class="wellness-card" style="background-color: #ffffff; color: #2d3748;">
+            <h3 style="color: #667eea;">🎯 Today's Goals</h3>
+            <p style="color: #2d3748;">✓ WHO-5 Wellness Check<br>
             ✓ Habits: {completed_habits}/{len(today_habits)}<br>
             ✓ Water: {water_progress}/8 glasses<br>
             ✓ Chat Check-in</p>
@@ -547,18 +546,18 @@ if page == "🏠 Dashboard":
         score_color = "#52B788" if wellness_score >= 70 else "#F7B801" if wellness_score >= 50 else "#FF6B35"
         
         st.markdown(f"""
-        <div class="wellness-card">
-            <h3>📈 Wellness Score</h3>
+        <div class="wellness-card" style="background-color: #ffffff; color: #2d3748;">
+            <h3 style="color: #667eea;">📈 Wellness Score</h3>
             <h2 style="color: {score_color};">{wellness_score}%</h2>
-            <p>{'Great progress!' if wellness_score >= 70 else 'Keep going!' if wellness_score >= 50 else 'Be gentle with yourself'}</p>
+            <p style="color: #2d3748;">{'Great progress!' if wellness_score >= 70 else 'Keep going!' if wellness_score >= 50 else 'Be gentle with yourself'}</p>
         </div>
         """, unsafe_allow_html=True)
     
     with col3:
         st.markdown(f"""
-        <div class="wellness-card">
-            <h3>🏆 Achievements</h3>
-            <p>{len(st.session_state.badges)} badges earned<br>
+        <div class="wellness-card" style="background-color: #ffffff; color: #2d3748;">
+            <h3 style="color: #667eea;">🏆 Achievements</h3>
+            <p style="color: #2d3748;">{len(st.session_state.badges)} badges earned<br>
             {st.session_state.streak_days} day streak 🔥</p>
         </div>
         """, unsafe_allow_html=True)
@@ -589,7 +588,7 @@ if page == "🏠 Dashboard":
         time.sleep(0.5)
         st.rerun()
     
-    # FIXED: Dynamic Wellness Insights based on TODAY'S score
+    # FIXED: Dynamic Wellness Insights - NOW VISIBLE IN DARK MODE
     st.markdown("### 💡 Your Wellness Insights")
     
     # Get LATEST score (from most recent entry or just submitted)
@@ -650,8 +649,21 @@ if page == "🏠 Dashboard":
         return "\n\n".join(insights)
     
     dynamic_insight = get_dynamic_insights(latest_score)
-    st.info(dynamic_insight)
-
+    
+    # FIXED: Custom styled box with GUARANTEED visible text
+    st.markdown(f"""
+    <div style="background-color: #f0f4ff; 
+                padding: 25px; 
+                border-radius: 12px; 
+                border-left: 5px solid #667eea;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                margin-top: 20px;">
+        <div style="color: #1a1a2e; 
+                    font-size: 16px; 
+                    line-height: 1.8;
+                    white-space: pre-line;">{dynamic_insight}</div>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ---------- AI CHAT PAGE ----------
 elif page == "💬 AI Chat":
