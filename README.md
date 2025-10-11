@@ -11,7 +11,7 @@
 [![Gemini AI](https://img.shields.io/badge/Powered%20by-Gemini%20AI-4285F4.svg)](https://ai.google.dev/)
 [![Status](https://img.shields.io/badge/Status-Active-success.svg)]()
 
-[Features](#-features) • [Installation](#-installation--setup) • [Tech Stack](#-tech-stack) • [Contributing](#-contributing)
+[Features](#-features) • [Installation](#-installation--setup) • [Tech Stack](#-tech-stack) • 
 
 </div>
 
@@ -336,21 +336,6 @@ TheraMate uses the **WHO-5 Well-Being Index**, a scientifically validated questi
 - ✅ **Crisis resources** available 24/7
 - ⚠️ **Disclaimer**: TheraMate is a supportive tool, not medical advice
 
----
-
-## 📜 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-```
-MIT License
-
-Copyright (c) 2025 TheraMate
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction...
-```
 
 ---
 
