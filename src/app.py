@@ -11,110 +11,6 @@ from io import BytesIO
 import base64
 from datetime import datetime, timedelta
 import plotly.graph_objects as go
-import json
-from pathlib import Path
-from typing import Any, List, Dict
-
-
-def initialize_session_state():
-    """
-    Initialize all session state variables to prevent AttributeErrors
-    Call this ONCE at the top of your app, before any page logic
-    """
-    
-    # Mood/WHO-5 data
-    if 'mood_history' not in st.session_state:
-        st.session_state.mood_history = load_json(MOOD_FILE, [])
-    
-    # Habits data
-    if 'habits' not in st.session_state:
-        st.session_state.habits = load_json(HABITS_FILE, [])
-    
-    # Water tracking
-    if 'water_data' not in st.session_state:
-        st.session_state.water_data = load_json(WATER_FILE, [])
-    
-    # Nutrition tracking
-    if 'nutrition_data' not in st.session_state:
-        st.session_state.nutrition_data = load_json(NUTRITION_FILE, [])
-    
-    # Sleep tracking
-    if 'sleep_data' not in st.session_state:
-        st.session_state.sleep_data = load_json(SLEEP_FILE, [])
-    
-    # Chat history
-    if 'chat_history' not in st.session_state:
-        st.session_state.chat_history = load_json(CHAT_FILE, [])
-    
-    # Badges and achievements
-    if 'badges' not in st.session_state:
-        st.session_state.badges = []
-    
-    if 'streak_days' not in st.session_state:
-        st.session_state.streak_days = 0
-    
-    # Custom theme
-    if 'custom_theme' not in st.session_state:
-        st.session_state.custom_theme = {}
-    
-    if 'use_custom_theme' not in st.session_state:
-        st.session_state.use_custom_theme = False
-    
-    # Chat input state (to clear after sending)
-    if 'chat_input_key' not in st.session_state:
-        st.session_state.chat_input_key = 0
-
-
-
-
-# ========== SESSION STATE INITIALIZATION (ADD TO TOP OF APP) ==========
-def initialize_session_state():
-    """
-    Initialize all session state variables to prevent AttributeErrors
-    Call this ONCE at the top of your app, before any page logic
-    """
-    
-    # Mood/WHO-5 data
-    if 'mood_history' not in st.session_state:
-        st.session_state.mood_history = load_json(MOOD_FILE, [])
-    
-    # Habits data
-    if 'habits' not in st.session_state:
-        st.session_state.habits = load_json(HABITS_FILE, [])
-    
-    # Water tracking
-    if 'water_data' not in st.session_state:
-        st.session_state.water_data = load_json(WATER_FILE, [])
-    
-    # Nutrition tracking
-    if 'nutrition_data' not in st.session_state:
-        st.session_state.nutrition_data = load_json(NUTRITION_FILE, [])
-    
-    # Sleep tracking
-    if 'sleep_data' not in st.session_state:
-        st.session_state.sleep_data = load_json(SLEEP_FILE, [])
-    
-    # Chat history
-    if 'chat_history' not in st.session_state:
-        st.session_state.chat_history = load_json(CHAT_FILE, [])
-    
-    # Badges and achievements
-    if 'badges' not in st.session_state:
-        st.session_state.badges = []
-    
-    if 'streak_days' not in st.session_state:
-        st.session_state.streak_days = 0
-    
-    # Custom theme
-    if 'custom_theme' not in st.session_state:
-        st.session_state.custom_theme = {}
-    
-    if 'use_custom_theme' not in st.session_state:
-        st.session_state.use_custom_theme = False
-    
-    # Chat input state (to clear after sending)
-    if 'chat_input_key' not in st.session_state:
-        st.session_state.chat_input_key = 0
 
 
 # Import custom modules
@@ -397,82 +293,18 @@ def hash_pin(pin: str) -> str:
 STORED_PIN_HASH = hash_pin("1234")
 
 
-
 def load_json(filepath: Path, default=None):
-    """
-    Safely load JSON with robust error handling for Streamlit Cloud
-    Returns default value if file doesn't exist or is corrupted
-    """
-    # Ensure default is a list if not specified
-    if default is None:
-        default = []
-    
-    # Check if file exists
-    if not filepath.exists():
-        # Create parent directory if it doesn't exist
-        filepath.parent.mkdir(parents=True, exist_ok=True)
-        # Create empty file with default data
-        save_json(filepath, default)
-        return default
-    
-    try:
-        # Try to read and parse JSON
-        with open(filepath, "r", encoding="utf-8") as f:
-            data = json.load(f)
-            
-            # Validate data type
-            if data is None:
-                return default
-            
-            # If default is a list, ensure data is a list
-            if isinstance(default, list) and not isinstance(data, list):
-                return default
-            
-            # If default is a dict, ensure data is a dict
-            if isinstance(default, dict) and not isinstance(data, dict):
-                return default
-            
-            return data
-            
-    except json.JSONDecodeError:
-        # File is corrupted, return default and recreate
-        save_json(filepath, default)
-        return default
-    except Exception as e:
-        # Any other error, return default
-        print(f"Error loading {filepath}: {e}")
-        return default
-
+    if filepath.exists():
+        try:
+            return json.loads(filepath.read_text(encoding="utf-8"))
+        except:
+            return default or []
+    return default or []
 
 
 def save_json(filepath: Path, data):
-    """
-    Safely save JSON with error handling
-    Creates directory structure if needed
-    """
-    try:
-        # Ensure parent directory exists
-        filepath.parent.mkdir(parents=True, exist_ok=True)
-        
-        # Write JSON with pretty formatting
-        with open(filepath, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-            
-    except Exception as e:
-        print(f"Error saving {filepath}: {e}")
-        # Re-raise so calling code knows save failed
-        raise
-
-
-def initialize_data_file(filepath: Path, default_data):
-    """
-    Initialize a data file if it doesn't exist
-    Useful for first-time setup
-    """
-    if not filepath.exists():
-        save_json(filepath, default_data)
-    return load_json(filepath, default_data)
-
+    with open(filepath, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
 
 
 def get_audio_base64(file_path):
@@ -1374,6 +1206,12 @@ You are not alone in this journey. Support is available, and things can improve.
 
             time.sleep(0.5)
             st.rerun()
+            
+            
+
+
+
+
 
     # ========== WELLNESS INSIGHTS - PREMIUM EMOTIONAL DESIGN ==========
         # ========== WELLNESS INSIGHTS - PREMIUM EMOTIONAL DESIGN ==========
@@ -1395,14 +1233,10 @@ You are not alone in this journey. Support is available, and things can improve.
                 "icon": "🌟",
                 "summary": "Your energy is soaring beautifully. You're in a powerful place of growth and positivity.",
                 "suggestions": [
-                    ("🌈", "Celebrate your wins",
-                     "Take a moment to acknowledge how far you've come"),
-                    ("💫", "Share your light",
-                     "Your positive energy can inspire someone else today"),
-                    ("📖", "Document this feeling",
-                     "Write down what's working so you can return to it"),
-                    ("🎯", "Set a new intention",
-                     "What would you love to explore next?")
+                    ("🌈", "Celebrate your wins", "Take a moment to acknowledge how far you've come"),
+                    ("💫", "Share your light", "Your positive energy can inspire someone else today"),
+                    ("📖", "Document this feeling", "Write down what's working so you can return to it"),
+                    ("🎯", "Set a new intention", "What would you love to explore next?")
                 ],
                 "closing": "You're not just thriving — you're blooming into your best self. Keep shining.",
                 "closing_emoji": "💖",
@@ -1417,14 +1251,10 @@ You are not alone in this journey. Support is available, and things can improve.
                 "icon": "💪",
                 "summary": "Your heart and mind are finding their rhythm. There's real momentum in your journey.",
                 "suggestions": [
-                    ("✨", "Reflect on today's joys",
-                     "What made you smile, even briefly?"),
-                    ("🌙", "Prioritize rest",
-                     "Your body and mind deserve gentle recovery"),
-                    ("💬", "Connect meaningfully",
-                     "Reach out to someone who brings you peace"),
-                    ("🧘", "Try mindful breathing",
-                     "Just 5 minutes can shift your whole day")
+                    ("✨", "Reflect on today's joys", "What made you smile, even briefly?"),
+                    ("🌙", "Prioritize rest", "Your body and mind deserve gentle recovery"),
+                    ("💬", "Connect meaningfully", "Reach out to someone who brings you peace"),
+                    ("🧘", "Try mindful breathing", "Just 5 minutes can shift your whole day")
                 ],
                 "closing": "You're not just improving — you're evolving with grace. Trust the process.",
                 "closing_emoji": "🌸",
@@ -1439,13 +1269,10 @@ You are not alone in this journey. Support is available, and things can improve.
                 "icon": "🌿",
                 "summary": "Some days feel harder than others, and that's completely okay. You're showing up, and that matters.",
                 "suggestions": [
-                    ("🕯️", "Be gentle with yourself",
-                     "Treat yourself like you would a dear friend"),
+                    ("🕯️", "Be gentle with yourself", "Treat yourself like you would a dear friend"),
                     ("🌊", "Take it slow", "Small steps forward are still progress"),
-                    ("☕", "Do something comforting",
-                     "A warm drink, soft music, or cozy blanket"),
-                    ("🤝", "Reach out if needed",
-                     "There's strength in asking for support")
+                    ("☕", "Do something comforting", "A warm drink, soft music, or cozy blanket"),
+                    ("🤝", "Reach out if needed", "There's strength in asking for support")
                 ],
                 "closing": "Your journey isn't always linear, and that's beautiful. Keep going softly.",
                 "closing_emoji": "💚",
@@ -1460,14 +1287,10 @@ You are not alone in this journey. Support is available, and things can improve.
                 "icon": "🌸",
                 "summary": "Right now feels heavy, and I want you to know: it's okay to not be okay. You're not alone.",
                 "suggestions": [
-                    ("🫂", "Be extra kind to yourself",
-                     "This moment doesn't define your worth"),
-                    ("🌙", "Rest without guilt",
-                     "Your body needs safety and comfort right now"),
-                    ("💌", "Talk to someone safe",
-                     "A friend, family member, or counselor who listens"),
-                    ("📞", "Professional support is strength",
-                     "Therapists and helplines are here for you")
+                    ("🫂", "Be extra kind to yourself", "This moment doesn't define your worth"),
+                    ("🌙", "Rest without guilt", "Your body needs safety and comfort right now"),
+                    ("💌", "Talk to someone safe", "A friend, family member, or counselor who listens"),
+                    ("📞", "Professional support is strength", "Therapists and helplines are here for you")
                 ],
                 "closing": "You are worthy of support, healing, and peace. Brighter days are possible.",
                 "closing_emoji": "🕊️",
@@ -1694,18 +1517,13 @@ You are not alone in this journey. Support is available, and things can improve.
         box-shadow: 0 8px 32px rgba({message['glow_color']}, 0.2);
     }}
 
-   
-   .closing-text {{
+    .closing-text {{
         color: {theme['text']};
-        font-size: 1.35rem;
-        font-weight: 700;
-        line-height: 1.9;
+        font-size: 1.3rem;
+        font-weight: 600;
+        line-height: 1.8;
         margin: 0;
-        text-shadow: 0 2px 8px rgba({message['glow_color']}, 0.2);
-        letter-spacing: 0.3px;
     }}
-   
-
 
     .closing-emoji {{
         font-size: 1.8rem;
@@ -1823,8 +1641,7 @@ You are not alone in this journey. Support is available, and things can improve.
     """, unsafe_allow_html=True)
 
     # Main premium card
-    st.markdown(f"""<div class="wellness-premium-card">""",
-                unsafe_allow_html=True)
+    st.markdown(f"""<div class="wellness-premium-card">""", unsafe_allow_html=True)
 
     # Header with icon and headline
     st.markdown(f"""
@@ -1835,8 +1652,7 @@ You are not alone in this journey. Support is available, and things can improve.
     """, unsafe_allow_html=True)
 
     # Summary
-    st.markdown(
-        f"""<p class="insight-summary">{message['summary']}</p>""", unsafe_allow_html=True)
+    st.markdown(f"""<p class="insight-summary">{message['summary']}</p>""", unsafe_allow_html=True)
 
     # Section title
     st.markdown(f"""<h3 class="suggestions-title"><span style="font-size: 1.8rem;">🌿</span> Gentle Ways Forward</h3>""", unsafe_allow_html=True)
@@ -1869,7 +1685,7 @@ You are not alone in this journey. Support is available, and things can improve.
         crisis_class = "crisis-premium-dark" if theme['base'] == "dark" else ""
         crisis_text_color = "#FFF5E6" if theme['base'] == "dark" else "#4A3728"
         crisis_heading_color = "#FFE4C4" if theme['base'] == "dark" else "#5D4037"
-
+        
         st.markdown(f"""<div class="crisis-premium {crisis_class}"><div class="crisis-header"><span class="crisis-icon">🤍</span><h3 class="crisis-title" style="color: {crisis_heading_color};">You're Not Alone</h3></div><p class="crisis-message" style="color: {crisis_text_color};">Right now feels heavy, and I want you to know: <strong>it's okay to not be okay.</strong><br>You matter, and help is here for you. 💙</p><div class="crisis-helplines"><h4 class="helpline-section-title" style="color: {crisis_heading_color};">🇮🇳 Immediate Support in India</h4><div class="helpline-item"><span style="color: {crisis_text_color}; font-size: 1.1rem; font-weight: 600;">☎️ <strong>AASRA Helpline</strong></span><a href="tel:+919820466726" class="helpline-number">+91-9820466726</a></div><div class="helpline-item"><span style="color: {crisis_text_color}; font-size: 1.1rem; font-weight: 600;">🌿 <strong>Snehi (24×7)</strong></span><a href="tel:+919582208181" class="helpline-number">+91-9582208181</a></div><p style="color: {crisis_text_color}; font-size: 1.1rem; font-weight: 600; text-align: center; margin-top: 1.5rem;">🌐 <strong>More Resources:</strong> <a href="https://findahelpline.com" target="_blank" style="color: #1976D2; text-decoration: underline; font-weight: 700;">findahelpline.com</a><span> (select India)</span></p></div><p class="crisis-footer" style="color: {crisis_text_color};">Reaching out is a sign of strength. You deserve support and care. 🌸</p></div>""", unsafe_allow_html=True)
 
     # Close main card
