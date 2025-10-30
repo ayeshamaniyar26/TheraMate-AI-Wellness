@@ -2001,5 +2001,224 @@
     "date": "2025-10-11",
     "note": "sedge ai review\n",
     "timestamp": "12:21 PM"
+  },
+  {
+    "score": 62,
+    "date": "2025-10-13",
+    "note": "",
+    "timestamp": "11:32 PM"
+  },
+  {
+    "score": 50,
+    "date": "2025-10-14",
+    "note": "bored",
+    "timestamp": "07:40 PM"
+  },
+  {
+    "who5": [
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "score": 60,
+    "date": "2025-10-15"
+  },
+  {
+    "who5": [
+      4,
+      1,
+      2,
+      3,
+      3
+    ],
+    "score": 52,
+    "date": "2025-10-15"
+  },
+  {
+    "who5": [
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "score": 60,
+    "date": "2025-10-20"
+  },
+  {
+    "score": 50,
+    "date": "2025-10-20",
+    "note": "",
+    "timestamp": "07:11 PM"
+  },
+  {
+    "score": 86,
+    "date": "2025-10-21",
+    "note": "motivated",
+    "timestamp": "01:50 AM"
+  },
+  {
+    "score": 86,
+    "date": "2025-10-21",
+    "note": "motivated",
+    "timestamp": "01:50 AM"
+  },
+  {
+    "score": 73,
+    "date": "2025-10-25",
+    "note": "good",
+    "timestamp": "11:51 PM"
+  },
+  {
+    "score": 13,
+    "date": "2025-10-25",
+    "note": "good",
+    "timestamp": "11:52 PM"
+  },
+  {
+    "score": 80,
+    "date": "2025-10-27",
+    "note": "evaluation was good",
+    "timestamp": "12:48 PM",
+    "emoji": "😄",
+    "label": "Excellent"
+  },
+  {
+    "score": 80,
+    "date": "2025-10-27",
+    "note": "evaluation was good",
+    "timestamp": "12:48 PM",
+    "emoji": "😄",
+    "label": "Excellent"
+  },
+  {
+    "score": 48,
+    "date": "2025-10-27",
+    "note": "evaluation was good",
+    "timestamp": "12:49 PM",
+    "emoji": "😐",
+    "label": "Okay"
+  },
+  {
+    "score": 25,
+    "date": "2025-10-27",
+    "note": "evaluation was bad",
+    "timestamp": "12:49 PM",
+    "emoji": "😢",
+    "label": "Low"
+  },
+  {
+    "score": 25,
+    "date": "2025-10-27",
+    "note": "evaluation was bad",
+    "timestamp": "12:49 PM",
+    "emoji": "😢",
+    "label": "Low"
+  },
+  {
+    "score": 12,
+    "date": "2025-10-27",
+    "note": "bad",
+    "timestamp": "01:04 PM",
+    "emoji": "😢",
+    "label": "Low"
+  },
+  {
+    "score": 12,
+    "date": "2025-10-27",
+    "note": "bad",
+    "timestamp": "01:04 PM",
+    "emoji": "😢",
+    "label": "Low"
+  },
+  {
+    "who5": [
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "score": 60,
+    "date": "2025-10-27"
+  },
+  {
+    "who5": [
+      4,
+      2,
+      4,
+      2,
+      4
+    ],
+    "score": 64,
+    "date": "2025-10-28"
+  },
+  {
+    "who5": [
+      4,
+      2,
+      4,
+      3,
+      1
+    ],
+    "score": 56,
+    "date": "2025-10-28"
+  },
+  {
+    "who5": [
+      5,
+      5,
+      5,
+      5,
+      5
+    ],
+    "score": 100,
+    "date": "2025-10-28"
+  },
+  {
+    "who5": [
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "score": 60,
+    "date": "2025-10-28"
+  },
+  {
+    "who5": [
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "score": 60,
+    "date": "2025-10-28"
+  },
+  {
+    "who5": [
+      1,
+      0,
+      0,
+      0,
+      1
+    ],
+    "score": 8,
+    "date": "2025-10-29"
+  },
+  {
+    "who5": [
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "score": 80,
+    "date": "2025-10-30"
   }
 ]
