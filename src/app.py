@@ -11,6 +11,110 @@ from io import BytesIO
 import base64
 from datetime import datetime, timedelta
 import plotly.graph_objects as go
+import json
+from pathlib import Path
+from typing import Any, List, Dict
+
+
+def initialize_session_state():
+    """
+    Initialize all session state variables to prevent AttributeErrors
+    Call this ONCE at the top of your app, before any page logic
+    """
+    
+    # Mood/WHO-5 data
+    if 'mood_history' not in st.session_state:
+        st.session_state.mood_history = load_json(MOOD_FILE, [])
+    
+    # Habits data
+    if 'habits' not in st.session_state:
+        st.session_state.habits = load_json(HABITS_FILE, [])
+    
+    # Water tracking
+    if 'water_data' not in st.session_state:
+        st.session_state.water_data = load_json(WATER_FILE, [])
+    
+    # Nutrition tracking
+    if 'nutrition_data' not in st.session_state:
+        st.session_state.nutrition_data = load_json(NUTRITION_FILE, [])
+    
+    # Sleep tracking
+    if 'sleep_data' not in st.session_state:
+        st.session_state.sleep_data = load_json(SLEEP_FILE, [])
+    
+    # Chat history
+    if 'chat_history' not in st.session_state:
+        st.session_state.chat_history = load_json(CHAT_FILE, [])
+    
+    # Badges and achievements
+    if 'badges' not in st.session_state:
+        st.session_state.badges = []
+    
+    if 'streak_days' not in st.session_state:
+        st.session_state.streak_days = 0
+    
+    # Custom theme
+    if 'custom_theme' not in st.session_state:
+        st.session_state.custom_theme = {}
+    
+    if 'use_custom_theme' not in st.session_state:
+        st.session_state.use_custom_theme = False
+    
+    # Chat input state (to clear after sending)
+    if 'chat_input_key' not in st.session_state:
+        st.session_state.chat_input_key = 0
+
+
+
+
+# ========== SESSION STATE INITIALIZATION (ADD TO TOP OF APP) ==========
+def initialize_session_state():
+    """
+    Initialize all session state variables to prevent AttributeErrors
+    Call this ONCE at the top of your app, before any page logic
+    """
+    
+    # Mood/WHO-5 data
+    if 'mood_history' not in st.session_state:
+        st.session_state.mood_history = load_json(MOOD_FILE, [])
+    
+    # Habits data
+    if 'habits' not in st.session_state:
+        st.session_state.habits = load_json(HABITS_FILE, [])
+    
+    # Water tracking
+    if 'water_data' not in st.session_state:
+        st.session_state.water_data = load_json(WATER_FILE, [])
+    
+    # Nutrition tracking
+    if 'nutrition_data' not in st.session_state:
+        st.session_state.nutrition_data = load_json(NUTRITION_FILE, [])
+    
+    # Sleep tracking
+    if 'sleep_data' not in st.session_state:
+        st.session_state.sleep_data = load_json(SLEEP_FILE, [])
+    
+    # Chat history
+    if 'chat_history' not in st.session_state:
+        st.session_state.chat_history = load_json(CHAT_FILE, [])
+    
+    # Badges and achievements
+    if 'badges' not in st.session_state:
+        st.session_state.badges = []
+    
+    if 'streak_days' not in st.session_state:
+        st.session_state.streak_days = 0
+    
+    # Custom theme
+    if 'custom_theme' not in st.session_state:
+        st.session_state.custom_theme = {}
+    
+    if 'use_custom_theme' not in st.session_state:
+        st.session_state.use_custom_theme = False
+    
+    # Chat input state (to clear after sending)
+    if 'chat_input_key' not in st.session_state:
+        st.session_state.chat_input_key = 0
 
 
 # Import custom modules
@@ -293,18 +397,82 @@ def hash_pin(pin: str) -> str:
 STORED_PIN_HASH = hash_pin("1234")
 
 
+
 def load_json(filepath: Path, default=None):
-    if filepath.exists():
-        try:
-            return json.loads(filepath.read_text(encoding="utf-8"))
-        except:
-            return default or []
-    return default or []
+    """
+    Safely load JSON with robust error handling for Streamlit Cloud
+    Returns default value if file doesn't exist or is corrupted
+    """
+    # Ensure default is a list if not specified
+    if default is None:
+        default = []
+    
+    # Check if file exists
+    if not filepath.exists():
+        # Create parent directory if it doesn't exist
+        filepath.parent.mkdir(parents=True, exist_ok=True)
+        # Create empty file with default data
+        save_json(filepath, default)
+        return default
+    
+    try:
+        # Try to read and parse JSON
+        with open(filepath, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            
+            # Validate data type
+            if data is None:
+                return default
+            
+            # If default is a list, ensure data is a list
+            if isinstance(default, list) and not isinstance(data, list):
+                return default
+            
+            # If default is a dict, ensure data is a dict
+            if isinstance(default, dict) and not isinstance(data, dict):
+                return default
+            
+            return data
+            
+    except json.JSONDecodeError:
+        # File is corrupted, return default and recreate
+        save_json(filepath, default)
+        return default
+    except Exception as e:
+        # Any other error, return default
+        print(f"Error loading {filepath}: {e}")
+        return default
+
 
 
 def save_json(filepath: Path, data):
-    with open(filepath, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+    """
+    Safely save JSON with error handling
+    Creates directory structure if needed
+    """
+    try:
+        # Ensure parent directory exists
+        filepath.parent.mkdir(parents=True, exist_ok=True)
+        
+        # Write JSON with pretty formatting
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+            
+    except Exception as e:
+        print(f"Error saving {filepath}: {e}")
+        # Re-raise so calling code knows save failed
+        raise
+
+
+def initialize_data_file(filepath: Path, default_data):
+    """
+    Initialize a data file if it doesn't exist
+    Useful for first-time setup
+    """
+    if not filepath.exists():
+        save_json(filepath, default_data)
+    return load_json(filepath, default_data)
+
 
 
 def get_audio_base64(file_path):
@@ -1527,6 +1695,15 @@ You are not alone in this journey. Support is available, and things can improve.
     }}
 
    
+   .closing-text {{
+        color: {theme['text']};
+        font-size: 1.35rem;
+        font-weight: 700;
+        line-height: 1.9;
+        margin: 0;
+        text-shadow: 0 2px 8px rgba({message['glow_color']}, 0.2);
+        letter-spacing: 0.3px;
+    }}
    
 
 
