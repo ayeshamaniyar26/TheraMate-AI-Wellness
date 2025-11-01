@@ -1,3 +1,9 @@
+from llm_adapter import (
+    call_gemini, WHO5_QUESTIONS, mood_history, save_mood,
+    suggest_exercise, get_helplines, get_today_habits,
+    mark_habit_done, get_weekly_happiness, get_wellness_insights,
+    calculate_streak
+)
 import streamlit as st
 import json
 from pathlib import Path
@@ -13,13 +19,25 @@ from datetime import datetime, timedelta
 import plotly.graph_objects as go
 
 
+def award_badge(badge_name, badge_emoji):
+    """Award a badge if it doesn't already exist"""
+    if 'badges' not in st.session_state:
+        st.session_state.badges = []
+
+    # Check if badge already exists
+    existing_badges = [b['name'] for b in st.session_state.badges]
+
+    if badge_name not in existing_badges:
+        st.session_state.badges.append({
+            'name': badge_name,
+            'emoji': badge_emoji,
+            'date': datetime.now().strftime("%Y-%m-%d")
+        })
+        return True  # Badge was newly awarded
+    return False  # Badge already exists
+
+
 # Import custom modules
-from llm_adapter import (
-    call_gemini, WHO5_QUESTIONS, mood_history, save_mood,
-    suggest_exercise, get_helplines, get_today_habits,
-    mark_habit_done, get_weekly_happiness, get_wellness_insights,
-    calculate_streak
-)
 
 # ---------- Page Config ----------
 st.set_page_config(
@@ -1206,12 +1224,6 @@ You are not alone in this journey. Support is available, and things can improve.
 
             time.sleep(0.5)
             st.rerun()
-            
-            
-
-
-
-
 
     # ========== WELLNESS INSIGHTS - PREMIUM EMOTIONAL DESIGN ==========
         # ========== WELLNESS INSIGHTS - PREMIUM EMOTIONAL DESIGN ==========
@@ -1233,10 +1245,14 @@ You are not alone in this journey. Support is available, and things can improve.
                 "icon": "🌟",
                 "summary": "Your energy is soaring beautifully. You're in a powerful place of growth and positivity.",
                 "suggestions": [
-                    ("🌈", "Celebrate your wins", "Take a moment to acknowledge how far you've come"),
-                    ("💫", "Share your light", "Your positive energy can inspire someone else today"),
-                    ("📖", "Document this feeling", "Write down what's working so you can return to it"),
-                    ("🎯", "Set a new intention", "What would you love to explore next?")
+                    ("🌈", "Celebrate your wins",
+                     "Take a moment to acknowledge how far you've come"),
+                    ("💫", "Share your light",
+                     "Your positive energy can inspire someone else today"),
+                    ("📖", "Document this feeling",
+                     "Write down what's working so you can return to it"),
+                    ("🎯", "Set a new intention",
+                     "What would you love to explore next?")
                 ],
                 "closing": "You're not just thriving — you're blooming into your best self. Keep shining.",
                 "closing_emoji": "💖",
@@ -1251,10 +1267,14 @@ You are not alone in this journey. Support is available, and things can improve.
                 "icon": "💪",
                 "summary": "Your heart and mind are finding their rhythm. There's real momentum in your journey.",
                 "suggestions": [
-                    ("✨", "Reflect on today's joys", "What made you smile, even briefly?"),
-                    ("🌙", "Prioritize rest", "Your body and mind deserve gentle recovery"),
-                    ("💬", "Connect meaningfully", "Reach out to someone who brings you peace"),
-                    ("🧘", "Try mindful breathing", "Just 5 minutes can shift your whole day")
+                    ("✨", "Reflect on today's joys",
+                     "What made you smile, even briefly?"),
+                    ("🌙", "Prioritize rest",
+                     "Your body and mind deserve gentle recovery"),
+                    ("💬", "Connect meaningfully",
+                     "Reach out to someone who brings you peace"),
+                    ("🧘", "Try mindful breathing",
+                     "Just 5 minutes can shift your whole day")
                 ],
                 "closing": "You're not just improving — you're evolving with grace. Trust the process.",
                 "closing_emoji": "🌸",
@@ -1269,10 +1289,13 @@ You are not alone in this journey. Support is available, and things can improve.
                 "icon": "🌿",
                 "summary": "Some days feel harder than others, and that's completely okay. You're showing up, and that matters.",
                 "suggestions": [
-                    ("🕯️", "Be gentle with yourself", "Treat yourself like you would a dear friend"),
+                    ("🕯️", "Be gentle with yourself",
+                     "Treat yourself like you would a dear friend"),
                     ("🌊", "Take it slow", "Small steps forward are still progress"),
-                    ("☕", "Do something comforting", "A warm drink, soft music, or cozy blanket"),
-                    ("🤝", "Reach out if needed", "There's strength in asking for support")
+                    ("☕", "Do something comforting",
+                     "A warm drink, soft music, or cozy blanket"),
+                    ("🤝", "Reach out if needed",
+                     "There's strength in asking for support")
                 ],
                 "closing": "Your journey isn't always linear, and that's beautiful. Keep going softly.",
                 "closing_emoji": "💚",
@@ -1287,10 +1310,14 @@ You are not alone in this journey. Support is available, and things can improve.
                 "icon": "🌸",
                 "summary": "Right now feels heavy, and I want you to know: it's okay to not be okay. You're not alone.",
                 "suggestions": [
-                    ("🫂", "Be extra kind to yourself", "This moment doesn't define your worth"),
-                    ("🌙", "Rest without guilt", "Your body needs safety and comfort right now"),
-                    ("💌", "Talk to someone safe", "A friend, family member, or counselor who listens"),
-                    ("📞", "Professional support is strength", "Therapists and helplines are here for you")
+                    ("🫂", "Be extra kind to yourself",
+                     "This moment doesn't define your worth"),
+                    ("🌙", "Rest without guilt",
+                     "Your body needs safety and comfort right now"),
+                    ("💌", "Talk to someone safe",
+                     "A friend, family member, or counselor who listens"),
+                    ("📞", "Professional support is strength",
+                     "Therapists and helplines are here for you")
                 ],
                 "closing": "You are worthy of support, healing, and peace. Brighter days are possible.",
                 "closing_emoji": "🕊️",
@@ -1641,7 +1668,8 @@ You are not alone in this journey. Support is available, and things can improve.
     """, unsafe_allow_html=True)
 
     # Main premium card
-    st.markdown(f"""<div class="wellness-premium-card">""", unsafe_allow_html=True)
+    st.markdown(f"""<div class="wellness-premium-card">""",
+                unsafe_allow_html=True)
 
     # Header with icon and headline
     st.markdown(f"""
@@ -1652,7 +1680,8 @@ You are not alone in this journey. Support is available, and things can improve.
     """, unsafe_allow_html=True)
 
     # Summary
-    st.markdown(f"""<p class="insight-summary">{message['summary']}</p>""", unsafe_allow_html=True)
+    st.markdown(
+        f"""<p class="insight-summary">{message['summary']}</p>""", unsafe_allow_html=True)
 
     # Section title
     st.markdown(f"""<h3 class="suggestions-title"><span style="font-size: 1.8rem;">🌿</span> Gentle Ways Forward</h3>""", unsafe_allow_html=True)
@@ -1685,7 +1714,7 @@ You are not alone in this journey. Support is available, and things can improve.
         crisis_class = "crisis-premium-dark" if theme['base'] == "dark" else ""
         crisis_text_color = "#FFF5E6" if theme['base'] == "dark" else "#4A3728"
         crisis_heading_color = "#FFE4C4" if theme['base'] == "dark" else "#5D4037"
-        
+
         st.markdown(f"""<div class="crisis-premium {crisis_class}"><div class="crisis-header"><span class="crisis-icon">🤍</span><h3 class="crisis-title" style="color: {crisis_heading_color};">You're Not Alone</h3></div><p class="crisis-message" style="color: {crisis_text_color};">Right now feels heavy, and I want you to know: <strong>it's okay to not be okay.</strong><br>You matter, and help is here for you. 💙</p><div class="crisis-helplines"><h4 class="helpline-section-title" style="color: {crisis_heading_color};">🇮🇳 Immediate Support in India</h4><div class="helpline-item"><span style="color: {crisis_text_color}; font-size: 1.1rem; font-weight: 600;">☎️ <strong>AASRA Helpline</strong></span><a href="tel:+919820466726" class="helpline-number">+91-9820466726</a></div><div class="helpline-item"><span style="color: {crisis_text_color}; font-size: 1.1rem; font-weight: 600;">🌿 <strong>Snehi (24×7)</strong></span><a href="tel:+919582208181" class="helpline-number">+91-9582208181</a></div><p style="color: {crisis_text_color}; font-size: 1.1rem; font-weight: 600; text-align: center; margin-top: 1.5rem;">🌐 <strong>More Resources:</strong> <a href="https://findahelpline.com" target="_blank" style="color: #1976D2; text-decoration: underline; font-weight: 700;">findahelpline.com</a><span> (select India)</span></p></div><p class="crisis-footer" style="color: {crisis_text_color};">Reaching out is a sign of strength. You deserve support and care. 🌸</p></div>""", unsafe_allow_html=True)
 
     # Close main card
@@ -2391,15 +2420,40 @@ elif page == "🎮 Wellness Games":
             save_json(GAMES_FILE, games_data)
 
             # Award badge
-            if award_badge("Mindful Breather", "🌬️"):
-                st.success("🏆 Badge Unlocked: Mindful Breather!")
-
-            # Show streak if multiple sessions
+           # ===== BREATHING EXERCISE BADGES =====
             breathing_sessions = [g for g in games_data if g.get(
                 "game") == "Breathing Exercise"]
-            if len(breathing_sessions) > 1:
+            session_count = len(breathing_sessions)
+
+            badge_awarded = False
+
+            # Award milestone badges
+            if session_count >= 1:
+                if award_badge("Calm Beginner", "🧘"):
+                    badge_awarded = True
+
+            if session_count >= 5:
+                if award_badge("Breathing Pro", "🌬️"):
+                    badge_awarded = True
+
+            if session_count >= 10:
+                if award_badge("Zen Master", "🌊"):
+                    badge_awarded = True
+
+            if session_count >= 25:
+                if award_badge("Mindfulness Guru", "✨"):
+                    badge_awarded = True
+
+            # Show celebration if badge was awarded
+            if badge_awarded:
+                st.balloons()
+                st.toast("🏆 New Badge Unlocked!")
+
+            # Show progress message
+            if session_count > 1:
                 st.info(
-                    f"🔥 You've completed {len(breathing_sessions)} breathing sessions! Keep it up!")
+                    f"🔥 You've completed {session_count} breathing sessions! Keep it up!")
+            # ===== END BREATHING BADGES =====
 
     # ========== WOULD YOU RATHER - NO CHANGES (Already working correctly) ==========
     elif game_choice == "🤔 Would You Rather":
@@ -2902,13 +2956,35 @@ elif page == "🎮 Wellness Games":
                         st.success(random.choice(cheerful_messages))
                         st.balloons()
 
-                        if award_badge("Grateful Heart", "✨"):
-                            st.info("🏆 Badge Unlocked: Grateful Heart!")
+                        # ===== GRATITUDE JOURNAL BADGES =====
+                        gratitude_count = len(gratitude_data)
+                        badge_awarded = False
+
+                        if gratitude_count >= 1:
+                            if award_badge("Grateful Heart", "💖"):
+                                badge_awarded = True
+
+                        if gratitude_count >= 7:
+                            if award_badge("Gratitude Week", "🌸"):
+                                badge_awarded = True
+
+                        if gratitude_count >= 30:
+                            if award_badge("Positivity Pro", "✨"):
+                                badge_awarded = True
+
+                        if gratitude_count >= 100:
+                            if award_badge("Gratitude Master", "🌟"):
+                                badge_awarded = True
+
+                        # Show celebration
+                        if badge_awarded:
+                            st.balloons()
+                            st.toast("🏆 New Badge Unlocked!")
+                        # ===== END GRATITUDE BADGES =====
+
                     else:
                         st.warning(
-                            "💭 Please write your reflection before saving!")
-
-    # ========== EMOJI MOOD MATCH - NO CHANGES (Already working correctly) ==========
+                            "💭 Please write your reflection before saving!")    # ========== EMOJI MOOD MATCH - NO CHANGES (Already working correctly) ==========
     elif game_choice == "😊 Emoji Mood Match":
         st.subheader("😊 Emoji Mood Match Game")
         st.markdown("**Match the emoji to the correct mood!**")
@@ -4076,7 +4152,6 @@ elif page == "😴 Sleep":
             key="sleep_quality"
         )
         dreams = st.checkbox("💭 Had vivid dreams?", key="sleep_dreams")
-
     if st.button("💾 Log Sleep", type="primary", key="sleep_log_btn", use_container_width=True):
         if sleep_time and wake_time:
             from datetime import datetime as dt
@@ -4100,11 +4175,25 @@ elif page == "😴 Sleep":
             save_json(SLEEP_FILE, sleep_data)
             st.success(f"✅ Logged {duration:.1f} hours of sleep!")
 
-            # Award badge for good sleep (7+ hours)
+            # Award badges and track if any new ones were unlocked
+            badge_awarded = False
+
             if duration >= 7:
                 if award_badge("Sleep Champion", "😴"):
-                    st.balloons()
-                    st.success("🏆 Badge unlocked: Sleep Champion!")
+                    badge_awarded = True
+
+            if len(sleep_data) >= 5:
+                if award_badge("Consistent Sleeper", "🌙"):
+                    badge_awarded = True
+
+            if duration >= 8:
+                if award_badge("Sweet Dreams", "⭐"):
+                    badge_awarded = True
+
+            # Only show celebration once if any badges were awarded
+            if badge_awarded:
+                st.balloons()
+                st.toast("🏆 New Badge Unlocked!")
 
             time.sleep(0.5)
             st.rerun()
