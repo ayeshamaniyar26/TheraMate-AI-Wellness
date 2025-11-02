@@ -1977,7 +1977,7 @@ elif page == "📊 Mood Tracker":
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         if st.button("💾 Save Mood Entry", type="primary", use_container_width=True):
-            today_key = datetime.today().strftime("%Y-%m-%d")
+            today_key = get_ist_time()
             mood_entry = {
                 "score": mood_score,
                 "date": today_key,
