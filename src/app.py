@@ -21,6 +21,7 @@ import plotly.graph_objects as go
 
 def award_badge(badge_name, badge_emoji):
     """Award a badge if it doesn't already exist"""
+   # CORRECT - This makes badges a list
     if 'badges' not in st.session_state:
         st.session_state.badges = []
 
@@ -1532,16 +1533,18 @@ You are not alone in this journey. Support is available, and things can improve.
         font-weight: 500;
     }}
 
+
+    
     .closing-box {{
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        margin-top: 3rem;
-        padding: 2rem;
-        background: linear-gradient(135deg, {message['gradient_start']}15, {message['gradient_end']}15);
-        border-radius: 18px;
-        border: 2px solid {message['gradient_start']};
-        box-shadow: 0 8px 32px rgba({message['glow_color']}, 0.2);
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-top: 3rem;
+    padding: 2rem;
+    background: {theme['secondary_bg']};  /* Changed from gradient with opacity */
+    border-radius: 18px;
+    border: 2px solid {message['gradient_start']};
+    box-shadow: 0 8px 32px rgba({message['glow_color']}, 0.2);
     }}
 
     .closing-text {{
@@ -1710,15 +1713,20 @@ You are not alone in this journey. Support is available, and things can improve.
     """, unsafe_allow_html=True)
 
     # Crisis section if needed - FIXED WITH SINGLE-LINE HTML
+    # Crisis section if needed - FIXED WITH PROPER THEME COLORS
     if message.get('crisis', False):
         crisis_class = "crisis-premium-dark" if theme['base'] == "dark" else ""
-        crisis_text_color = "#FFF5E6" if theme['base'] == "dark" else "#4A3728"
-        crisis_heading_color = "#FFE4C4" if theme['base'] == "dark" else "#5D4037"
 
-        st.markdown(f"""<div class="crisis-premium {crisis_class}"><div class="crisis-header"><span class="crisis-icon">🤍</span><h3 class="crisis-title" style="color: {crisis_heading_color};">You're Not Alone</h3></div><p class="crisis-message" style="color: {crisis_text_color};">Right now feels heavy, and I want you to know: <strong>it's okay to not be okay.</strong><br>You matter, and help is here for you. 💙</p><div class="crisis-helplines"><h4 class="helpline-section-title" style="color: {crisis_heading_color};">🇮🇳 Immediate Support in India</h4><div class="helpline-item"><span style="color: {crisis_text_color}; font-size: 1.1rem; font-weight: 600;">☎️ <strong>AASRA Helpline</strong></span><a href="tel:+919820466726" class="helpline-number">+91-9820466726</a></div><div class="helpline-item"><span style="color: {crisis_text_color}; font-size: 1.1rem; font-weight: 600;">🌿 <strong>Snehi (24×7)</strong></span><a href="tel:+919582208181" class="helpline-number">+91-9582208181</a></div><p style="color: {crisis_text_color}; font-size: 1.1rem; font-weight: 600; text-align: center; margin-top: 1.5rem;">🌐 <strong>More Resources:</strong> <a href="https://findahelpline.com" target="_blank" style="color: #1976D2; text-decoration: underline; font-weight: 700;">findahelpline.com</a><span> (select India)</span></p></div><p class="crisis-footer" style="color: {crisis_text_color};">Reaching out is a sign of strength. You deserve support and care. 🌸</p></div>""", unsafe_allow_html=True)
+        # Use theme['text'] for all text to ensure visibility
+        crisis_text_color = theme['text']  # Dynamic text color
+        crisis_heading_color = theme['primary']  # Use primary theme color
+        crisis_bg_color = theme['card_bg']  # Use card background
+        crisis_secondary_bg = theme['secondary_bg']  # Use secondary background
 
-    # Close main card
-    st.markdown("""</div>""", unsafe_allow_html=True)
+        st.markdown(
+            f"""<div class="crisis-premium {crisis_class}" style="background: {crisis_bg_color}; backdrop-filter: blur(10px);"><div class="crisis-header"><span class="crisis-icon">🤍</span><h3 class="crisis-title" style="color: {crisis_heading_color};">You're Not Alone</h3></div><p class="crisis-message" style="color: {crisis_text_color}; background: {crisis_secondary_bg};">Right now feels heavy, and I want you to know: <strong style="color: {crisis_text_color};">it's okay to not be okay.</strong><br>You matter, and help is here for you. 💙</p><div class="crisis-helplines" style="background: {crisis_secondary_bg};"><h4 class="helpline-section-title" style="color: {crisis_heading_color};">🇮🇳 Immediate Support in India</h4><div class="helpline-item" style="background: {theme['card_bg']};"><span style="color: {crisis_text_color}; font-size: 1.1rem; font-weight: 600;">☎️ <strong>AASRA Helpline</strong></span><a href="tel:+919820466726" class="helpline-number">+91-9820466726</a></div><div class="helpline-item" style="background: {theme['card_bg']};"><span style="color: {crisis_text_color}; font-size: 1.1rem; font-weight: 600;">🌿 <strong>Snehi (24×7)</strong></span><a href="tel:+919582208181" class="helpline-number">+91-9582208181</a></div><p style="color: {crisis_text_color}; font-size: 1.1rem; font-weight: 600; text-align: center; margin-top: 1.5rem;">🌐 <strong>More Resources:</strong> <a href="https://findahelpline.com" target="_blank" style="color: {theme['primary']}; text-decoration: underline; font-weight: 700;">findahelpline.com</a><span> (select India)</span></p></div><p class="crisis-footer" style="color: {crisis_text_color};">Reaching out is a sign of strength. You deserve support and care. 🌸</p></div>""", unsafe_allow_html=True)
+
+        st.markdown("""</div>""", unsafe_allow_html=True)
 
     # ========== QUICK ACTIONS (FULLY DYNAMIC TEXT) ==========
     st.markdown("<br>", unsafe_allow_html=True)
