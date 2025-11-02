@@ -18,6 +18,13 @@ import base64
 from datetime import datetime, timedelta
 import plotly.graph_objects as go
 
+from datetime import datetime, timezone, timedelta
+
+def get_ist_time():
+    """Get current time in Indian Standard Time"""
+    ist = timezone(timedelta(hours=5, minutes=30))
+    return datetime.now(ist).strftime("%I:%M %p")
+
 
 def award_badge(badge_name, badge_emoji):
     """Award a badge if it doesn't already exist"""
@@ -1781,15 +1788,15 @@ elif page == "💬 AI Chat":
             <span class="typing-dot"></span>
         </div>
         """, unsafe_allow_html=True)
-
-    # Chat input
+# Chat input
     with st.form(key="chat_form", clear_on_submit=True):
         user_text = st.text_input(
             "Type your message...", placeholder="How are you feeling today?")
         send_button = st.form_submit_button("Send 📤", type="primary")
 
+    # ✅ This should be OUTSIDE the form (unindented one level)
     if send_button and user_text.strip():
-        timestamp = datetime.now().strftime("%I:%M %p")
+        timestamp = get_ist_time()  # ✅ Use IST helper
 
         st.session_state.chat_history.append({
             "role": "user",
@@ -1812,12 +1819,12 @@ elif page == "💬 AI Chat":
         st.session_state.chat_history.append({
             "role": "assistant",
             "text": reply,
-            "timestamp": timestamp
+            "timestamp": get_ist_time()  # ✅ Use IST helper here too
         })
 
         st.session_state.show_typing = False
         st.rerun()
-
+        
 
 # ========== MOOD TRACKER PAGE - FULLY FIXED & ENHANCED ==========
 elif page == "📊 Mood Tracker":
