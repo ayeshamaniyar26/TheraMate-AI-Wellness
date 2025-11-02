@@ -1973,31 +1973,48 @@ elif page == "📊 Mood Tracker":
         height=100
     )
 
+
     # Save button with better feedback
     col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        if st.button("💾 Save Mood Entry", type="primary", use_container_width=True):
-            today_key = get_ist_time()
-            mood_entry = {
-                "score": mood_score,
-                "date": today_key,
-                "note": mood_note.strip() if mood_note else "",
-                "timestamp": datetime.now().strftime("%I:%M %p"),
-                "emoji": emoji_display,
-                "label": mood_label
-            }
-            mood_history.append(mood_entry)
-            save_mood()
+        with col2:
+            if st.button("💾 Save Mood Entry", type="primary", use_container_width=True):
+                # ✅ Use IST for both date and time
+                ist = timezone(timedelta(hours=5, minutes=30))
+                today_key = datetime.now(ist).strftime("%Y-%m-%d")
+                
+                mood_entry = {
+                    "score": mood_score,
+                    "date": today_key,
+                    "note": mood_note.strip() if mood_note else "",
+                    "timestamp": get_ist_time(),  # ✅ FIXED - Use IST helper
+                    "emoji": emoji_display,
+                    "label": mood_label
+                }
+                mood_history.append(mood_entry)
+                save_mood()
 
-            st.success(
-                f"✅ Mood saved! You're feeling {mood_label} today ({mood_score}%) {emoji_display}")
+                st.success(
+                    f"✅ Mood saved! You're feeling {mood_label} today ({mood_score}%) {emoji_display}")
 
-            # Update streak
-            st.session_state.streak_days = calculate_streak()
+                # Update streak
+                st.session_state.streak_days = calculate_streak()
 
-            # FIX #3: Force immediate rerun to update graph and notes
-            time.sleep(0.3)
-            st.rerun()
+                # FIX #3: Force immediate rerun to update graph and notes
+                time.sleep(0.3)
+                st.rerun()
+                
+                mood_history.append(mood_entry)
+                save_mood()
+
+                st.success(
+                    f"✅ Mood saved! You're feeling {mood_label} today ({mood_score}%) {emoji_display}")
+
+                # Update streak
+                st.session_state.streak_days = calculate_streak()
+
+                # FIX #3: Force immediate rerun to update graph and notes
+                time.sleep(0.3)
+                st.rerun()
 
     st.markdown("---")
 
