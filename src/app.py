@@ -1973,48 +1973,47 @@ elif page == "📊 Mood Tracker":
         height=100
     )
 
-
     # Save button with better feedback
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-            if st.button("💾 Save Mood Entry", type="primary", use_container_width=True):
-                # ✅ Use IST for both date and time
-                ist = timezone(timedelta(hours=5, minutes=30))
-                today_key = datetime.now(ist).strftime("%Y-%m-%d")
-                
-                mood_entry = {
-                    "score": mood_score,
-                    "date": today_key,
-                    "note": mood_note.strip() if mood_note else "",
-                    "timestamp": get_ist_time(),  # ✅ FIXED - Use IST helper
-                    "emoji": emoji_display,
-                    "label": mood_label
-                }
-                mood_history.append(mood_entry)
-                save_mood()
+        if st.button("💾 Save Mood Entry", type="primary", use_container_width=True):
+            # ✅ Use IST for both date and time
+            ist = timezone(timedelta(hours=5, minutes=30))
+            today_key = datetime.now(ist).strftime("%Y-%m-%d")
 
-                st.success(
-                    f"✅ Mood saved! You're feeling {mood_label} today ({mood_score}%) {emoji_display}")
+            mood_entry = {
+                "score": mood_score,
+                "date": today_key,
+                "note": mood_note.strip() if mood_note else "",
+                "timestamp": get_ist_time(),  # ✅ FIXED - Use IST helper
+                "emoji": emoji_display,
+                "label": mood_label
+            }
+            mood_history.append(mood_entry)
+            save_mood()
 
-                # Update streak
-                st.session_state.streak_days = calculate_streak()
+            st.success(
+                f"✅ Mood saved! You're feeling {mood_label} today ({mood_score}%) {emoji_display}")
 
-                # FIX #3: Force immediate rerun to update graph and notes
-                time.sleep(0.3)
-                st.rerun()
-                
-                mood_history.append(mood_entry)
-                save_mood()
+            # Update streak
+            st.session_state.streak_days = calculate_streak()
 
-                st.success(
-                    f"✅ Mood saved! You're feeling {mood_label} today ({mood_score}%) {emoji_display}")
+            # FIX #3: Force immediate rerun to update graph and notes
+            time.sleep(0.3)
+            st.rerun()
 
-                # Update streak
-                st.session_state.streak_days = calculate_streak()
+            mood_history.append(mood_entry)
+            save_mood()
 
-                # FIX #3: Force immediate rerun to update graph and notes
-                time.sleep(0.3)
-                st.rerun()
+            st.success(
+                f"✅ Mood saved! You're feeling {mood_label} today ({mood_score}%) {emoji_display}")
+
+            # Update streak
+            st.session_state.streak_days = calculate_streak()
+
+            # FIX #3: Force immediate rerun to update graph and notes
+            time.sleep(0.3)
+            st.rerun()
 
     st.markdown("---")
 
@@ -3641,7 +3640,7 @@ elif page == "🍎 Nutrition":
     nutrition_data = load_json(NUTRITION_FILE, [])
     if not isinstance(nutrition_data, list):
         nutrition_data = []  # Reset to empty list if corrupted
-    
+
     today = datetime.today().strftime("%Y-%m-%d")
 
     # Enhanced calorie database with Indian foods
@@ -3839,7 +3838,6 @@ elif page == "🍎 Nutrition":
             fat_val = custom_fat
             st.success("✅ Using custom nutrition values")
 
-
     # Add meal button
         if st.button("➕ Add Meal", type="primary", use_container_width=True, key="nutrition_add_meal"):
             if food_item.strip() and calories > 0:
@@ -3858,11 +3856,12 @@ elif page == "🍎 Nutrition":
                 # ✅ FIXED: Ensure nutrition_data is a list before appending
                 if not isinstance(nutrition_data, list):
                     nutrition_data = []
-                
+
                 nutrition_data.append(new_entry)
                 save_json(NUTRITION_FILE, nutrition_data)
 
-                st.success(f"✅ {meal_type} logged: {food_item} ({calories} kcal)")
+                st.success(
+                    f"✅ {meal_type} logged: {food_item} ({calories} kcal)")
 
                 if award_badge("Nutrition Tracker", "🍎"):
                     st.balloons()
