@@ -3637,7 +3637,11 @@ elif page == "🍎 Nutrition":
                 unsafe_allow_html=True)
 
     # Load nutrition data
+    # ✅ FIXED: Ensure nutrition_data is always a list
     nutrition_data = load_json(NUTRITION_FILE, [])
+    if not isinstance(nutrition_data, list):
+        nutrition_data = []  # Reset to empty list if corrupted
+    
     today = datetime.today().strftime("%Y-%m-%d")
 
     # Enhanced calorie database with Indian foods
@@ -3835,37 +3839,42 @@ elif page == "🍎 Nutrition":
             fat_val = custom_fat
             st.success("✅ Using custom nutrition values")
 
+
     # Add meal button
-    if st.button("➕ Add Meal", type="primary", use_container_width=True, key="nutrition_add_meal"):
-        if food_item.strip() and calories > 0:
-            new_entry = {
-                "date": today,
-                "meal_type": meal_type,
-                "description": food_item.strip(),
-                "calories": calories,
-                "protein": round(protein_val, 1),
-                "carbs": round(carbs_val, 1),
-                "fat": round(fat_val, 1),
-                "portion": portion,
-                "timestamp": datetime.now().strftime("%I:%M %p")
-            }
+        if st.button("➕ Add Meal", type="primary", use_container_width=True, key="nutrition_add_meal"):
+            if food_item.strip() and calories > 0:
+                new_entry = {
+                    "date": today,
+                    "meal_type": meal_type,
+                    "description": food_item.strip(),
+                    "calories": calories,
+                    "protein": round(protein_val, 1),
+                    "carbs": round(carbs_val, 1),
+                    "fat": round(fat_val, 1),
+                    "portion": portion,
+                    "timestamp": get_ist_time()  # ✅ FIXED - Use IST helper
+                }
 
-            nutrition_data.append(new_entry)
-            save_json(NUTRITION_FILE, nutrition_data)
+                # ✅ FIXED: Ensure nutrition_data is a list before appending
+                if not isinstance(nutrition_data, list):
+                    nutrition_data = []
+                
+                nutrition_data.append(new_entry)
+                save_json(NUTRITION_FILE, nutrition_data)
 
-            st.success(f"✅ {meal_type} logged: {food_item} ({calories} kcal)")
+                st.success(f"✅ {meal_type} logged: {food_item} ({calories} kcal)")
 
-            if award_badge("Nutrition Tracker", "🍎"):
-                st.balloons()
+                if award_badge("Nutrition Tracker", "🍎"):
+                    st.balloons()
 
-            # Clear form
-            st.session_state.nutrition_calories = 0
+                # Clear form
+                st.session_state.nutrition_calories = 0
 
-            time.sleep(0.5)
-            st.rerun()
-        else:
-            st.error(
-                "⚠️ Please enter a food item and ensure calories are calculated")
+                time.sleep(0.5)
+                st.rerun()
+            else:
+                st.error(
+                    "⚠️ Please enter a food item and ensure calories are calculated")
 
     # Today's nutrition summary
     st.markdown("---")
