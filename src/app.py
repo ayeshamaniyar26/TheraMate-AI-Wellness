@@ -325,20 +325,20 @@ def load_json(filepath, default=[]):
     # Convert to Path object if it's a string
     if isinstance(filepath, str):
         filepath = Path(filepath)
-    
+
     # Check if file exists
     if not filepath.exists():
         return default if isinstance(default, list) else []
-    
+
     try:
         data = json.loads(filepath.read_text(encoding="utf-8"))
-        
+
         # ✅ Ensure we return the right type (list vs dict)
         if isinstance(default, list) and not isinstance(data, list):
             return []
         elif isinstance(default, dict) and not isinstance(data, dict):
             return {}
-            
+
         return data
     except Exception as e:
         # Return appropriate default based on expected type
@@ -1993,48 +1993,47 @@ elif page == "📊 Mood Tracker":
         height=100
     )
 
-
     # Save button with better feedback
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-            if st.button("💾 Save Mood Entry", type="primary", use_container_width=True):
-                # ✅ Use IST for both date and time
-                ist = timezone(timedelta(hours=5, minutes=30))
-                today_key = datetime.now(ist).strftime("%Y-%m-%d")
-                
-                mood_entry = {
-                    "score": mood_score,
-                    "date": today_key,
-                    "note": mood_note.strip() if mood_note else "",
-                    "timestamp": get_ist_time(),  # ✅ FIXED - Use IST helper
-                    "emoji": emoji_display,
-                    "label": mood_label
-                }
-                mood_history.append(mood_entry)
-                save_mood()
+        if st.button("💾 Save Mood Entry", type="primary", use_container_width=True):
+            # ✅ Use IST for both date and time
+            ist = timezone(timedelta(hours=5, minutes=30))
+            today_key = datetime.now(ist).strftime("%Y-%m-%d")
 
-                st.success(
-                    f"✅ Mood saved! You're feeling {mood_label} today ({mood_score}%) {emoji_display}")
+            mood_entry = {
+                "score": mood_score,
+                "date": today_key,
+                "note": mood_note.strip() if mood_note else "",
+                "timestamp": get_ist_time(),  # ✅ FIXED - Use IST helper
+                "emoji": emoji_display,
+                "label": mood_label
+            }
+            mood_history.append(mood_entry)
+            save_mood()
 
-                # Update streak
-                st.session_state.streak_days = calculate_streak()
+            st.success(
+                f"✅ Mood saved! You're feeling {mood_label} today ({mood_score}%) {emoji_display}")
 
-                # FIX #3: Force immediate rerun to update graph and notes
-                time.sleep(0.3)
-                st.rerun()
-                
-                mood_history.append(mood_entry)
-                save_mood()
+            # Update streak
+            st.session_state.streak_days = calculate_streak()
 
-                st.success(
-                    f"✅ Mood saved! You're feeling {mood_label} today ({mood_score}%) {emoji_display}")
+            # FIX #3: Force immediate rerun to update graph and notes
+            time.sleep(0.3)
+            st.rerun()
 
-                # Update streak
-                st.session_state.streak_days = calculate_streak()
+            mood_history.append(mood_entry)
+            save_mood()
 
-                # FIX #3: Force immediate rerun to update graph and notes
-                time.sleep(0.3)
-                st.rerun()
+            st.success(
+                f"✅ Mood saved! You're feeling {mood_label} today ({mood_score}%) {emoji_display}")
+
+            # Update streak
+            st.session_state.streak_days = calculate_streak()
+
+            # FIX #3: Force immediate rerun to update graph and notes
+            time.sleep(0.3)
+            st.rerun()
 
     st.markdown("---")
 
@@ -3661,7 +3660,7 @@ elif page == "🍎 Nutrition":
     nutrition_data = load_json(NUTRITION_FILE, [])
     if not isinstance(nutrition_data, list):
         nutrition_data = []  # Reset to empty list if corrupted
-    
+
     today = datetime.today().strftime("%Y-%m-%d")
 
     # Enhanced calorie database with Indian foods
@@ -3878,7 +3877,7 @@ elif page == "🍎 Nutrition":
             # ✅ FIXED: Ensure nutrition_data is a list before appending
             if not isinstance(nutrition_data, list):
                 nutrition_data = []
-            
+
             nutrition_data.append(new_entry)
             save_json(NUTRITION_FILE, nutrition_data)
 
@@ -4075,7 +4074,7 @@ elif page == "🍎 Nutrition":
         for idx, food in enumerate(popular_foods):
             with cols[idx % 5]:
                 st.markdown(f"**{food}**")
-                
+
 # ========== WATER TRACKER - FULLY WORKING ==========
 elif page == "💧 Water":
     st.markdown("<h1 style='color: #667eea;'>💧 Water Intake Tracker</h1>",
@@ -4085,7 +4084,7 @@ elif page == "💧 Water":
     water_data = load_json(WATER_FILE, [])
     if not isinstance(water_data, list):
         water_data = []  # Reset to empty list if corrupted
-    
+
     # ✅ FIXED: Define today variable with IST timezone
     ist = timezone(timedelta(hours=5, minutes=30))
     today = datetime.now(ist).strftime("%Y-%m-%d")
@@ -4094,14 +4093,13 @@ elif page == "💧 Water":
     today_entry = next((w for w in water_data if w.get("date") == today), None)
     if not today_entry:
         today_entry = {"date": today, "glasses": 0, "goal": 8}
-        
+
         # ✅ FIXED: Ensure water_data is a list before appending
         if not isinstance(water_data, list):
             water_data = []
-            
+
         water_data.append(today_entry)
         save_json(WATER_FILE, water_data)
-        
 
     current_glasses = today_entry.get("glasses", 0)
     goal = today_entry.get("goal", 8)
@@ -4216,26 +4214,31 @@ elif page == "😴 Sleep":
     sleep_data = load_json(SLEEP_FILE, [])
     today = datetime.today().strftime("%Y-%m-%d")
 
-    # ========== SECTION 1: LOG SLEEP ==========
-    st.markdown("### 🌙 Log Your Sleep")
-    st.markdown("---")
+    # Ensure sleep_data is a list
+    if not isinstance(sleep_data, list):
+        sleep_data = []
 
-    col1, col2 = st.columns(2)
+   # ========== SECTION 1: LOG SLEEP ==========
+st.markdown("### 🌙 Log Your Sleep")
+st.markdown("---")
 
-    with col1:
-        sleep_time = st.time_input(
-            "🛏️ Bedtime", value=None, key="sleep_bedtime", help="What time did you go to bed?")
-        wake_time = st.time_input(
-            "⏰ Wake Time", value=None, key="sleep_waketime", help="What time did you wake up?")
+col1, col2 = st.columns(2)
 
-    with col2:
-        sleep_quality = st.select_slider(
-            "⭐ Sleep Quality",
-            options=["Poor", "Fair", "Good", "Great", "Excellent"],
-            value="Good",
-            key="sleep_quality"
-        )
-        dreams = st.checkbox("💭 Had vivid dreams?", key="sleep_dreams")
+with col1:
+    sleep_time = st.time_input(
+        "🛏️ Bedtime", value=None, key="sleep_bedtime", help="What time did you go to bed?")
+    wake_time = st.time_input(
+        "⏰ Wake Time", value=None, key="sleep_waketime", help="What time did you wake up?")
+
+with col2:
+    sleep_quality = st.select_slider(
+        "⭐ Sleep Quality",
+        options=["Poor", "Fair", "Good", "Great", "Excellent"],
+        value="Good",
+        key="sleep_quality"
+    )
+    dreams = st.checkbox("💭 Had vivid dreams?", key="sleep_dreams")
+
     if st.button("💾 Log Sleep", type="primary", key="sleep_log_btn", use_container_width=True):
         if sleep_time and wake_time:
             from datetime import datetime as dt
@@ -4248,6 +4251,10 @@ elif page == "😴 Sleep":
 
             duration = (wake_dt - sleep_dt).total_seconds() / 3600
 
+            # Fix: Ensure sleep_data is a list
+            if not isinstance(sleep_data, list):
+                sleep_data = []
+
             sleep_data.append({
                 "date": today,
                 "sleep_time": sleep_time.strftime("%I:%M %p"),
@@ -4256,6 +4263,7 @@ elif page == "😴 Sleep":
                 "quality": sleep_quality,
                 "dreams": dreams
             })
+
             save_json(SLEEP_FILE, sleep_data)
             st.success(f"✅ Logged {duration:.1f} hours of sleep!")
 
