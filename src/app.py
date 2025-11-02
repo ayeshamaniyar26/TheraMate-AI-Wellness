@@ -4239,229 +4239,229 @@ elif page == "😴 Sleep":
         )
         dreams = st.checkbox("💭 Had vivid dreams?", key="sleep_dreams")
 
-        if st.button("💾 Log Sleep", type="primary", key="sleep_log_btn", use_container_width=True):
-            if sleep_time and wake_time:
-                from datetime import datetime as dt
-                sleep_dt = dt.combine(dt.today(), sleep_time)
-                wake_dt = dt.combine(dt.today(), wake_time)
+    if st.button("💾 Log Sleep", type="primary", key="sleep_log_btn", use_container_width=True):
+        if sleep_time and wake_time:
+            from datetime import datetime as dt
+            sleep_dt = dt.combine(dt.today(), sleep_time)
+            wake_dt = dt.combine(dt.today(), wake_time)
 
-                # Handle overnight sleep
-                if wake_dt < sleep_dt:
-                    wake_dt += timedelta(days=1)
+            # Handle overnight sleep
+            if wake_dt < sleep_dt:
+                wake_dt += timedelta(days=1)
 
-                duration = (wake_dt - sleep_dt).total_seconds() / 3600
+            duration = (wake_dt - sleep_dt).total_seconds() / 3600
 
-                # Fix: Ensure sleep_data is a list
-                if not isinstance(sleep_data, list):
-                    sleep_data = []
+            # Fix: Ensure sleep_data is a list
+            if not isinstance(sleep_data, list):
+                sleep_data = []
 
-                sleep_data.append({
-                    "date": today,
-                    "sleep_time": sleep_time.strftime("%I:%M %p"),
-                    "wake_time": wake_time.strftime("%I:%M %p"),
-                    "duration": round(duration, 1),
-                    "quality": sleep_quality,
-                    "dreams": dreams
-                })
+            sleep_data.append({
+                "date": today,
+                "sleep_time": sleep_time.strftime("%I:%M %p"),
+                "wake_time": wake_time.strftime("%I:%M %p"),
+                "duration": round(duration, 1),
+                "quality": sleep_quality,
+                "dreams": dreams
+            })
 
-                save_json(SLEEP_FILE, sleep_data)
-                st.success(f"✅ Logged {duration:.1f} hours of sleep!")
+            save_json(SLEEP_FILE, sleep_data)
+            st.success(f"✅ Logged {duration:.1f} hours of sleep!")
 
-                # Award badges and track if any new ones were unlocked
-                badge_awarded = False
+            # Award badges and track if any new ones were unlocked
+            badge_awarded = False
 
-                if duration >= 7:
-                    if award_badge("Sleep Champion", "😴"):
-                        badge_awarded = True
+            if duration >= 7:
+                if award_badge("Sleep Champion", "😴"):
+                    badge_awarded = True
 
-                if len(sleep_data) >= 5:
-                    if award_badge("Consistent Sleeper", "🌙"):
-                        badge_awarded = True
+            if len(sleep_data) >= 5:
+                if award_badge("Consistent Sleeper", "🌙"):
+                    badge_awarded = True
 
-                if duration >= 8:
-                    if award_badge("Sweet Dreams", "⭐"):
-                        badge_awarded = True
+            if duration >= 8:
+                if award_badge("Sweet Dreams", "⭐"):
+                    badge_awarded = True
 
-                # Only show celebration once if any badges were awarded
-                if badge_awarded:
-                    st.balloons()
-                    st.toast("🏆 New Badge Unlocked!")
+            # Only show celebration once if any badges were awarded
+            if badge_awarded:
+                st.balloons()
+                st.toast("🏆 New Badge Unlocked!")
 
-                time.sleep(0.5)
-                st.rerun()
-            else:
-                st.error("⚠️ Please enter both bedtime and wake time")
-
-        # ========== SECTION 2: SLEEP SUMMARY & INSIGHTS ==========
-        if sleep_data:
-            st.markdown("---")
-            st.markdown("### 📊 Your Sleep Summary")
-
-            # Get last 7 days of sleep data
-            recent_sleep = []
-            for i in range(7):
-                date = (datetime.today() - timedelta(days=6-i)
-                        ).strftime("%Y-%m-%d")
-                day_data = next(
-                    (s for s in sleep_data if s.get("date") == date), None)
-                recent_sleep.append({
-                    "date": date,
-                    "day": (datetime.today() - timedelta(days=6-i)).strftime("%a"),
-                    "duration": day_data.get("duration", 0) if day_data else 0
-                })
-
-            # Calculate weekly average
-            durations = [s["duration"]
-                         for s in recent_sleep if s["duration"] > 0]
-            avg_duration = sum(durations) / len(durations) if durations else 0
-
-            # Display average with emoji
-            def get_sleep_emoji(hours):
-                if hours >= 8:
-                    return "😴 Excellent!"
-                elif hours >= 6:
-                    return "😊 Good!"
-                elif hours >= 4:
-                    return "😐 Fair"
-                else:
-                    return "😢 Poor"
-
-            # Metrics row
-            col1, col2, col3 = st.columns(3)
-            with col1:
-                st.metric("📊 Weekly Average",
-                          f"{avg_duration:.1f} hrs", help="Average sleep over last 7 days")
-            with col2:
-                quality_emoji = get_sleep_emoji(avg_duration)
-                st.metric("⭐ Sleep Quality", quality_emoji)
-            with col3:
-                total_nights = len(
-                    [s for s in recent_sleep if s["duration"] > 0])
-                st.metric("📅 Nights Logged", f"{total_nights}/7")
-
-            # ========== SECTION 3: SLEEP CHART (LAST 7 DAYS) ==========
-            st.markdown("#### 📈 Sleep Duration Trend (Last 7 Days)")
-
-            # Create bar chart with Plotly
-            days = [s["day"] for s in recent_sleep]
-            sleep_hours = [s["duration"] for s in recent_sleep]
-
-            # Color based on duration
-            colors = []
-            for h in sleep_hours:
-                if h >= 8:
-                    colors.append('#52B788')  # Green - Excellent
-                elif h >= 6:
-                    colors.append('#F7B801')  # Yellow - Good
-                elif h > 0:
-                    colors.append('#FF6B35')  # Red - Poor
-                else:
-                    colors.append('#E0E0E0')  # Gray - No data
-
-            fig = go.Figure()
-
-            fig.add_trace(go.Bar(
-                x=days,
-                y=sleep_hours,
-                marker_color=colors,
-                text=[f"{h:.1f}h" if h > 0 else "" for h in sleep_hours],
-                textposition='outside',
-                hovertemplate='<b>%{x}</b><br>Sleep: %{y:.1f} hours<extra></extra>'
-            ))
-
-            # Add reference lines
-            fig.add_hline(y=7, line_dash="dash", line_color="green",
-                          annotation_text="Recommended Min (7h)",
-                          annotation_position="right")
-            fig.add_hline(y=9, line_dash="dash", line_color="orange",
-                          annotation_text="Recommended Max (9h)",
-                          annotation_position="right")
-
-            fig.update_layout(
-                yaxis=dict(range=[0, max(sleep_hours + [10])], title="Hours"),
-                xaxis=dict(title="Day of Week"),
-                template="plotly_white",
-                showlegend=False,
-                height=400
-            )
-
-            st.plotly_chart(fig, use_container_width=True)
-
-            # ========== SECTION 4: SMART SLEEP INSIGHTS ==========
-            st.markdown("#### 💡 Your Sleep Insights")
-
-            # Generate and display insights
-            insights = get_smart_sleep_insights(sleep_data)
-            for insight in insights:
-                st.info(insight)
-
-            # ========== SECTION 5: DETAILED SLEEP LOGS ==========
-            st.markdown("---")
-            st.markdown("### 📋 Recent Sleep Logs")
-
-            recent_entries = [s for s in sleep_data if s.get("date")][-5:]
-
-            if recent_entries:
-                for entry in reversed(recent_entries):
-                    quality = entry.get("quality", "Good")
-                    duration = entry.get("duration", 0)
-                    date = entry.get("date", "Unknown")
-                    sleep_time = entry.get("sleep_time", "N/A")
-                    wake_time = entry.get("wake_time", "N/A")
-                    has_dreams = entry.get("dreams", False)
-
-                    # Quality emoji
-                    quality_emojis = {
-                        "Poor": "😴",
-                        "Fair": "😐",
-                        "Good": "😊",
-                        "Great": "😄",
-                        "Excellent": "⭐"
-                    }
-                    quality_emoji = quality_emojis.get(quality, "😴")
-
-                    # Duration color and label
-                    if duration >= 8:
-                        duration_color = "#52B788"
-                        duration_label = "Excellent"
-                        duration_icon = "🌟"
-                    elif duration >= 6:
-                        duration_color = "#F7B801"
-                        duration_label = "Good"
-                        duration_icon = "👍"
-                    else:
-                        duration_color = "#FF6B35"
-                        duration_label = "Needs Attention"
-                        duration_icon = "⚠️"
-
-                    dream_text = " | 💭 Dreams" if has_dreams else ""
-
-                    with st.container():
-                        col1, col2 = st.columns([3, 1])
-                        with col1:
-                            st.markdown(f"**📅 {date}** {quality_emoji}")
-                            st.markdown(f"🛏️ {sleep_time} → ⏰ {wake_time}")
-                            st.markdown(f"**Quality:** {quality}{dream_text}")
-                        with col2:
-                            st.markdown(
-                                f"<h2 style='color:{duration_color}; text-align:center; margin:0;'>{duration}h</h2>", unsafe_allow_html=True)
-                            st.markdown(
-                                f"<p style='text-align:center; color:{duration_color}; font-weight:600; margin:5px 0;'>{duration_icon} {duration_label}</p>", unsafe_allow_html=True)
-                        st.markdown("---")
+            time.sleep(0.5)
+            st.rerun()
         else:
-            st.info("📭 No sleep logs yet. Start tracking to see your history!")
+            st.error("⚠️ Please enter both bedtime and wake time")
 
-            st.markdown("**💡 Quick Start Guide:**")
-            col1, col2, col3 = st.columns(3)
-            with col1:
-                st.markdown("**1️⃣ Log Sleep**")
-                st.write("Fill in your sleep times above")
-            with col2:
-                st.markdown("**2️⃣ Rate Quality**")
-                st.write("Choose how well you slept")
-            with col3:
-                st.markdown("**3️⃣ Track Progress**")
-                st.write("See your sleep patterns grow")
+    # ========== SECTION 2: SLEEP SUMMARY & INSIGHTS ==========
+    if sleep_data:
+        st.markdown("---")
+        st.markdown("### 📊 Your Sleep Summary")
+
+        # Get last 7 days of sleep data
+        recent_sleep = []
+        for i in range(7):
+            date = (datetime.today() - timedelta(days=6-i)
+                    ).strftime("%Y-%m-%d")
+            day_data = next(
+                (s for s in sleep_data if s.get("date") == date), None)
+            recent_sleep.append({
+                "date": date,
+                "day": (datetime.today() - timedelta(days=6-i)).strftime("%a"),
+                "duration": day_data.get("duration", 0) if day_data else 0
+            })
+
+        # Calculate weekly average
+        durations = [s["duration"]
+                        for s in recent_sleep if s["duration"] > 0]
+        avg_duration = sum(durations) / len(durations) if durations else 0
+
+        # Display average with emoji
+        def get_sleep_emoji(hours):
+            if hours >= 8:
+                return "😴 Excellent!"
+            elif hours >= 6:
+                return "😊 Good!"
+            elif hours >= 4:
+                return "😐 Fair"
+            else:
+                return "😢 Poor"
+
+        # Metrics row
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric("📊 Weekly Average",
+                        f"{avg_duration:.1f} hrs", help="Average sleep over last 7 days")
+        with col2:
+            quality_emoji = get_sleep_emoji(avg_duration)
+            st.metric("⭐ Sleep Quality", quality_emoji)
+        with col3:
+            total_nights = len(
+                [s for s in recent_sleep if s["duration"] > 0])
+            st.metric("📅 Nights Logged", f"{total_nights}/7")
+
+        # ========== SECTION 3: SLEEP CHART (LAST 7 DAYS) ==========
+        st.markdown("#### 📈 Sleep Duration Trend (Last 7 Days)")
+
+        # Create bar chart with Plotly
+        days = [s["day"] for s in recent_sleep]
+        sleep_hours = [s["duration"] for s in recent_sleep]
+
+        # Color based on duration
+        colors = []
+        for h in sleep_hours:
+            if h >= 8:
+                colors.append('#52B788')  # Green - Excellent
+            elif h >= 6:
+                colors.append('#F7B801')  # Yellow - Good
+            elif h > 0:
+                colors.append('#FF6B35')  # Red - Poor
+            else:
+                colors.append('#E0E0E0')  # Gray - No data
+
+        fig = go.Figure()
+
+        fig.add_trace(go.Bar(
+            x=days,
+            y=sleep_hours,
+            marker_color=colors,
+            text=[f"{h:.1f}h" if h > 0 else "" for h in sleep_hours],
+            textposition='outside',
+            hovertemplate='<b>%{x}</b><br>Sleep: %{y:.1f} hours<extra></extra>'
+        ))
+
+        # Add reference lines
+        fig.add_hline(y=7, line_dash="dash", line_color="green",
+                        annotation_text="Recommended Min (7h)",
+                        annotation_position="right")
+        fig.add_hline(y=9, line_dash="dash", line_color="orange",
+                        annotation_text="Recommended Max (9h)",
+                        annotation_position="right")
+
+        fig.update_layout(
+            yaxis=dict(range=[0, max(sleep_hours + [10])], title="Hours"),
+            xaxis=dict(title="Day of Week"),
+            template="plotly_white",
+            showlegend=False,
+            height=400
+        )
+
+        st.plotly_chart(fig, use_container_width=True)
+
+        # ========== SECTION 4: SMART SLEEP INSIGHTS ==========
+        st.markdown("#### 💡 Your Sleep Insights")
+
+        # Generate and display insights
+        insights = get_smart_sleep_insights(sleep_data)
+        for insight in insights:
+            st.info(insight)
+
+        # ========== SECTION 5: DETAILED SLEEP LOGS ==========
+        st.markdown("---")
+        st.markdown("### 📋 Recent Sleep Logs")
+
+        recent_entries = [s for s in sleep_data if s.get("date")][-5:]
+
+        if recent_entries:
+            for entry in reversed(recent_entries):
+                quality = entry.get("quality", "Good")
+                duration = entry.get("duration", 0)
+                date = entry.get("date", "Unknown")
+                sleep_time = entry.get("sleep_time", "N/A")
+                wake_time = entry.get("wake_time", "N/A")
+                has_dreams = entry.get("dreams", False)
+
+                # Quality emoji
+                quality_emojis = {
+                    "Poor": "😴",
+                    "Fair": "😐",
+                    "Good": "😊",
+                    "Great": "😄",
+                    "Excellent": "⭐"
+                }
+                quality_emoji = quality_emojis.get(quality, "😴")
+
+                # Duration color and label
+                if duration >= 8:
+                    duration_color = "#52B788"
+                    duration_label = "Excellent"
+                    duration_icon = "🌟"
+                elif duration >= 6:
+                    duration_color = "#F7B801"
+                    duration_label = "Good"
+                    duration_icon = "👍"
+                else:
+                    duration_color = "#FF6B35"
+                    duration_label = "Needs Attention"
+                    duration_icon = "⚠️"
+
+                dream_text = " | 💭 Dreams" if has_dreams else ""
+
+                with st.container():
+                    col1, col2 = st.columns([3, 1])
+                    with col1:
+                        st.markdown(f"**📅 {date}** {quality_emoji}")
+                        st.markdown(f"🛏️ {sleep_time} → ⏰ {wake_time}")
+                        st.markdown(f"**Quality:** {quality}{dream_text}")
+                    with col2:
+                        st.markdown(
+                            f"<h2 style='color:{duration_color}; text-align:center; margin:0;'>{duration}h</h2>", unsafe_allow_html=True)
+                        st.markdown(
+                            f"<p style='text-align:center; color:{duration_color}; font-weight:600; margin:5px 0;'>{duration_icon} {duration_label}</p>", unsafe_allow_html=True)
+                    st.markdown("---")
+    else:
+        st.info("📭 No sleep logs yet. Start tracking to see your history!")
+
+        st.markdown("**💡 Quick Start Guide:**")
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.markdown("**1️⃣ Log Sleep**")
+            st.write("Fill in your sleep times above")
+        with col2:
+            st.markdown("**2️⃣ Rate Quality**")
+            st.write("Choose how well you slept")
+        with col3:
+            st.markdown("**3️⃣ Track Progress**")
+            st.write("See your sleep patterns grow")
 
 
 # ========== MENTAL HEALTH HELPLINES - VERIFIED LINKS ==========
