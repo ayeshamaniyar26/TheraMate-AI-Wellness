@@ -20,6 +20,7 @@ import plotly.graph_objects as go
 
 from datetime import datetime, timezone, timedelta
 
+
 def get_ist_time():
     """Get current time in Indian Standard Time"""
     ist = timezone(timedelta(hours=5, minutes=30))
@@ -768,6 +769,7 @@ with st.sidebar:
             st.markdown(f"<div class='badge'>{badge['emoji']} {badge['name']}</div>",
                         unsafe_allow_html=True)
 
+
 # ---------- Quick Chat Floating Button - FIXED ----------
 if page != "💬 AI Chat":
     # Create a container at the bottom for the chat button
@@ -788,34 +790,42 @@ if page != "💬 AI Chat":
             with mini_chat_container:
                 # Show last 5 messages
                 for msg in st.session_state.chat_history[-5:]:
+                    timestamp = msg.get('timestamp', '')
                     if msg["role"] == "user":
-                        st.markdown(f"**You:** {msg['text']}")
+                        st.markdown(
+                            f"**You:** {msg['text']} <small style='opacity:0.7;'>{timestamp}</small>", unsafe_allow_html=True)
                     else:
-                        st.markdown(f"**🌸 TheraMate:** {msg['text']}")
+                        st.markdown(
+                            f"**🌸 TheraMate:** {msg['text']} <small style='opacity:0.6;'>{timestamp}</small>", unsafe_allow_html=True)
 
-            quick_input = st.text_input(
-                "Quick message...", key="quick_chat_input")
-            if st.button("Send", key="quick_send", type="primary"):
-                if quick_input.strip():
-                    timestamp = datetime.now().strftime("%I:%M %p")
-                    st.session_state.chat_history.append({
-                        "role": "user",
-                        "text": quick_input.strip(),
-                        "timestamp": timestamp
-                    })
+            # ✅ Use form to auto-clear input
+            with st.form(key="quick_chat_form", clear_on_submit=True):
+                quick_input = st.text_input(
+                    "Quick message...", key="quick_chat_input", placeholder="Type your message...")
+                send_quick = st.form_submit_button("Send 📤", type="primary")
 
-                    context = {
-                        "mood_score": mood_history[-1].get("score") if mood_history else None,
-                        "streak": st.session_state.streak_days
-                    }
-                    reply = call_gemini(quick_input.strip(), context)
+            # ✅ Handle outside the form
+            if send_quick and quick_input.strip():
+                timestamp = get_ist_time()  # ✅ Use IST helper
 
-                    st.session_state.chat_history.append({
-                        "role": "assistant",
-                        "text": reply,
-                        "timestamp": timestamp
-                    })
-                    st.rerun()
+                st.session_state.chat_history.append({
+                    "role": "user",
+                    "text": quick_input.strip(),
+                    "timestamp": timestamp
+                })
+
+                context = {
+                    "mood_score": mood_history[-1].get("score") if mood_history else None,
+                    "streak": st.session_state.streak_days
+                }
+                reply = call_gemini(quick_input.strip(), context)
+
+                st.session_state.chat_history.append({
+                    "role": "assistant",
+                    "text": reply,
+                    "timestamp": get_ist_time()  # ✅ Use IST helper
+                })
+                st.rerun()
 
 
 # ========== 🏠 DASHBOARD PAGE - FULLY THEME-AWARE & DYNAMIC ==========
@@ -1824,7 +1834,7 @@ elif page == "💬 AI Chat":
 
         st.session_state.show_typing = False
         st.rerun()
-        
+
 
 # ========== MOOD TRACKER PAGE - FULLY FIXED & ENHANCED ==========
 elif page == "📊 Mood Tracker":
