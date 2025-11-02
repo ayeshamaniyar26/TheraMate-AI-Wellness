@@ -1083,25 +1083,25 @@ You are not alone in this journey. Support is available, and things can improve.
 
     # 🔹 Load Data (with auto-refresh support) - DYNAMIC
     # 🔹 Load Data from SESSION STATE (not JSON files)
-    today_str = datetime.today().strftime("%Y-%m-%d")
+today_str = datetime.today().strftime("%Y-%m-%d")
 
-    # Get today's habits from session state
-    today_habits = st.session_state.get('today_habits', [])
-    completed_habits = sum(1 for h in today_habits if h.get("done", False))
-    total_habits = len(today_habits)
+# Get today's habits from session state
+today_habits = st.session_state.get('today_habits', [])
+completed_habits = sum(1 for h in today_habits if h.get("done", False))
+total_habits = len(today_habits)
 
-    # Get water progress from session state
-    water_progress = st.session_state.water_data.get("glasses", 0)
+# Get water progress from session state
+water_progress = st.session_state.water_data.get("glasses", 0)
 
-    # Check if WHO-5 completed today from session state
-    who5_done_today = st.session_state.get('who5_completed_today', False)
+# Check if WHO-5 completed today from session state
+who5_done_today = st.session_state.get('who5_completed_today', False)
 
-    # Get wellness score from session state
-    wellness_score = st.session_state.get('wellness_score', 0)
+# Get wellness score from session state
+wellness_score = st.session_state.get('wellness_score', 0)
 
-    # Badges and streak from session state
-    badges = len(st.session_state.get('badges', []))
-    streak = st.session_state.get('streak_days', 0)
+# Badges and streak from session state
+badges = len(st.session_state.get('badges', []))
+streak = st.session_state.get('streak_days', 0)
 
     # Check if WHO-5 completed today
     who5_done_today = bool(
@@ -1117,18 +1117,9 @@ You are not alone in this journey. Support is available, and things can improve.
             1 if completed_habits == total_habits and total_habits > 0 else 0,
             1 if water_progress >= 8 else 0
         ])
-        goal_percent = int((goal_complete / 3) *# 1. Check what files changed
-git status
+        goal_percent = int((goal_complete / 3) * 100) if goal_complete > 0 else 0
 
-# 2. Add all your changes
-git add .
 
-# 3. Commit with a meaningful message
-git commit -m "✨ Enhanced Wellness Insights section with premium UI and India helplines"
-
-# 4. Push to GitHub
-git push origin main
-                           100) if goal_complete > 0 else 0
 
         st.markdown(f"""
         <div style="
