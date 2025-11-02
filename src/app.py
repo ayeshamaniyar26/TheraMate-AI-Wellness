@@ -848,10 +848,55 @@ if page != "💬 AI Chat":
                 st.rerun()
 
 
+
+
+# ========== INITIALIZE SESSION STATE FOR USER-SPECIFIC DATA ==========
+def init_session_state():
+    """Initialize session state with default values for each user session"""
+    if 'user_initialized' not in st.session_state:
+        st.session_state.user_initialized = True
+        
+        # Today's date
+        today_str = datetime.today().strftime("%Y-%m-%d")
+        
+        # Water intake (reset daily)
+        if 'water_data' not in st.session_state:
+            st.session_state.water_data = {"date": today_str, "glasses": 0}
+        elif st.session_state.water_data.get("date") != today_str:
+            st.session_state.water_data = {"date": today_str, "glasses": 0}
+        
+        # Habits (reset daily)
+        if 'today_habits' not in st.session_state or st.session_state.get('habits_date') != today_str:
+            st.session_state.today_habits = []
+            st.session_state.habits_date = today_str
+        
+        # WHO-5 completion status
+        if 'who5_completed_today' not in st.session_state:
+            st.session_state.who5_completed_today = False
+        elif st.session_state.get('who5_date') != today_str:
+            st.session_state.who5_completed_today = False
+            st.session_state.who5_date = today_str
+        
+        # Wellness score
+        if 'wellness_score' not in st.session_state:
+            st.session_state.wellness_score = 0
+        
+        # Badges and streaks (persistent)
+        if 'badges' not in st.session_state:
+            st.session_state.badges = []
+        if 'streak_days' not in st.session_state:
+            st.session_state.streak_days = 0
+
+# Call this at the start of your app
+init_session_state()
+
 # ========== 🏠 DASHBOARD PAGE - FULLY THEME-AWARE & DYNAMIC ==========
 if page == "🏠 Dashboard":
     import time
     from datetime import datetime
+    init_session_state()
+    theme = get_theme_colors()
+
 
     # 🌈 Smart Theme Detection with Custom Theme Support (ENHANCED)
     def get_theme_colors():
@@ -1037,15 +1082,26 @@ You are not alone in this journey. Support is available, and things can improve.
     """, unsafe_allow_html=True)
 
     # 🔹 Load Data (with auto-refresh support) - DYNAMIC
-    today_habits = get_today_habits()
-    completed_habits = sum(1 for h in today_habits if h.get("done"))
-    total_habits = len(today_habits) if today_habits else 0
-
-    water_data = load_json(WATER_FILE, [])
+    # 🔹 Load Data from SESSION STATE (not JSON files)
     today_str = datetime.today().strftime("%Y-%m-%d")
-    today_water = next((w for w in water_data if w.get(
-        "date") == today_str), {"glasses": 0})
-    water_progress = today_water.get("glasses", 0)
+
+    # Get today's habits from session state
+    today_habits = st.session_state.get('today_habits', [])
+    completed_habits = sum(1 for h in today_habits if h.get("done", False))
+    total_habits = len(today_habits)
+
+    # Get water progress from session state
+    water_progress = st.session_state.water_data.get("glasses", 0)
+
+    # Check if WHO-5 completed today from session state
+    who5_done_today = st.session_state.get('who5_completed_today', False)
+
+    # Get wellness score from session state
+    wellness_score = st.session_state.get('wellness_score', 0)
+
+    # Badges and streak from session state
+    badges = len(st.session_state.get('badges', []))
+    streak = st.session_state.get('streak_days', 0)
 
     # Check if WHO-5 completed today
     who5_done_today = bool(
@@ -1061,7 +1117,17 @@ You are not alone in this journey. Support is available, and things can improve.
             1 if completed_habits == total_habits and total_habits > 0 else 0,
             1 if water_progress >= 8 else 0
         ])
-        goal_percent = int((goal_complete / 3) *
+        goal_percent = int((goal_complete / 3) *# 1. Check what files changed
+git status
+
+# 2. Add all your changes
+git add .
+
+# 3. Commit with a meaningful message
+git commit -m "✨ Enhanced Wellness Insights section with premium UI and India helplines"
+
+# 4. Push to GitHub
+git push origin main
                            100) if goal_complete > 0 else 0
 
         st.markdown(f"""
@@ -4312,7 +4378,7 @@ elif page == "😴 Sleep":
 
         # Calculate weekly average
         durations = [s["duration"]
-                        for s in recent_sleep if s["duration"] > 0]
+                     for s in recent_sleep if s["duration"] > 0]
         avg_duration = sum(durations) / len(durations) if durations else 0
 
         # Display average with emoji
@@ -4330,7 +4396,7 @@ elif page == "😴 Sleep":
         col1, col2, col3 = st.columns(3)
         with col1:
             st.metric("📊 Weekly Average",
-                        f"{avg_duration:.1f} hrs", help="Average sleep over last 7 days")
+                      f"{avg_duration:.1f} hrs", help="Average sleep over last 7 days")
         with col2:
             quality_emoji = get_sleep_emoji(avg_duration)
             st.metric("⭐ Sleep Quality", quality_emoji)
@@ -4371,11 +4437,11 @@ elif page == "😴 Sleep":
 
         # Add reference lines
         fig.add_hline(y=7, line_dash="dash", line_color="green",
-                        annotation_text="Recommended Min (7h)",
-                        annotation_position="right")
+                      annotation_text="Recommended Min (7h)",
+                      annotation_position="right")
         fig.add_hline(y=9, line_dash="dash", line_color="orange",
-                        annotation_text="Recommended Max (9h)",
-                        annotation_position="right")
+                      annotation_text="Recommended Max (9h)",
+                      annotation_position="right")
 
         fig.update_layout(
             yaxis=dict(range=[0, max(sleep_hours + [10])], title="Hours"),
