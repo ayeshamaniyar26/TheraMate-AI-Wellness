@@ -1976,7 +1976,7 @@ elif page == "📊 Mood Tracker":
 
     # Save button with better feedback
     col1, col2, col3 = st.columns([1, 2, 1])
-        with col2:
+    with col2:
             if st.button("💾 Save Mood Entry", type="primary", use_container_width=True):
                 # ✅ Use IST for both date and time
                 ist = timezone(timedelta(hours=5, minutes=30))
