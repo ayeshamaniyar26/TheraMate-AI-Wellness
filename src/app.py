@@ -4085,8 +4085,11 @@ elif page == "💧 Water":
     water_data = load_json(WATER_FILE, [])
     if not isinstance(water_data, list):
         water_data = []  # Reset to empty list if corrupted
+    
+    # ✅ FIXED: Define today variable with IST timezone
+    ist = timezone(timedelta(hours=5, minutes=30))
+    today = datetime.now(ist).strftime("%Y-%m-%d")
 
-    # Find or create today's entry
     # Find or create today's entry
     today_entry = next((w for w in water_data if w.get("date") == today), None)
     if not today_entry:
