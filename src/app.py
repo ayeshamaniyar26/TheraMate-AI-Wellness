@@ -320,13 +320,33 @@ def hash_pin(pin: str) -> str:
 STORED_PIN_HASH = hash_pin("1234")
 
 
-def load_json(filepath: Path, default=None):
-    if filepath.exists():
-        try:
-            return json.loads(filepath.read_text(encoding="utf-8"))
-        except:
-            return default or []
-    return default or []
+def load_json(filepath, default=[]):
+    """Load JSON file with proper error handling - supports both Path and string"""
+    # Convert to Path object if it's a string
+    if isinstance(filepath, str):
+        filepath = Path(filepath)
+    
+    # Check if file exists
+    if not filepath.exists():
+        return default if isinstance(default, list) else []
+    
+    try:
+        data = json.loads(filepath.read_text(encoding="utf-8"))
+        
+        # ✅ Ensure we return the right type (list vs dict)
+        if isinstance(default, list) and not isinstance(data, list):
+            return []
+        elif isinstance(default, dict) and not isinstance(data, dict):
+            return {}
+            
+        return data
+    except Exception as e:
+        # Return appropriate default based on expected type
+        if isinstance(default, list):
+            return []
+        elif isinstance(default, dict):
+            return {}
+        return default
 
 
 def save_json(filepath: Path, data):
@@ -4055,20 +4075,30 @@ elif page == "🍎 Nutrition":
         for idx, food in enumerate(popular_foods):
             with cols[idx % 5]:
                 st.markdown(f"**{food}**")
+                
 # ========== WATER TRACKER - FULLY WORKING ==========
 elif page == "💧 Water":
     st.markdown("<h1 style='color: #667eea;'>💧 Water Intake Tracker</h1>",
                 unsafe_allow_html=True)
 
+    # ✅ FIXED: Ensure water_data is always a list
     water_data = load_json(WATER_FILE, [])
-    today = datetime.today().strftime("%Y-%m-%d")
+    if not isinstance(water_data, list):
+        water_data = []  # Reset to empty list if corrupted
 
+    # Find or create today's entry
     # Find or create today's entry
     today_entry = next((w for w in water_data if w.get("date") == today), None)
     if not today_entry:
         today_entry = {"date": today, "glasses": 0, "goal": 8}
+        
+        # ✅ FIXED: Ensure water_data is a list before appending
+        if not isinstance(water_data, list):
+            water_data = []
+            
         water_data.append(today_entry)
         save_json(WATER_FILE, water_data)
+        
 
     current_glasses = today_entry.get("glasses", 0)
     goal = today_entry.get("goal", 8)
